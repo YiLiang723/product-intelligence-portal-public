@@ -1,0 +1,34 @@
+{
+  "generatedAt": "2026-07-24T11:03:35+08:00",
+  "intro": "本周 Microsoft 三大产品线共同指向一个主题：从『能用 Copilot』走向『可规模化、可治理、可生产的企业级 Agent 平台』。以下按产品线拆解本周重点。",
+  "sections": [
+    {
+      "emoji": "🧩",
+      "title": "M365 Copilot",
+      "points": [
+        "🏢 企业级落地实战：官方分享百万文档、10 万+ 月活、300+ agent 的 Copilot 连接器建设经验，是本周最具参考价值的规模化案例。",
+        "📊 grounding 更强：M365 Copilot 将集成 Power BI（GA 8 月），可直接基于报表与语义模型作答；同时新增 Web grounding 域排除，让回答更贴合组织可信来源。",
+        "🤖 Agent 生态打通：声明式 Agent（含 Actions）登陆 GCC High 与 DoD 主权云；Agent 365 agents 可在 Copilot Chat 与声明式 Agent 中调用，并新增管理者分析仪表盘。",
+        "📱 移动与笔记场景扩展：Copilot Notebooks 多模态捕获、OneNote 移动版摘要问答陆续 GA，Copilot 正从桌面走向移动端全场景。"
+      ]
+    },
+    {
+      "emoji": "🛠️",
+      "title": "Copilot Studio",
+      "points": [
+        "👨‍💻 面向开发者提速：Dataverse 插件上架 Cursor Marketplace，Power Pages 支持原生 Dataverse 授权，开发者链路进一步打通。",
+        "🔗 数据与分析融合：Link to Fabric UX 刷新、SharePoint 列表可作为知识源，Dataverse 正被打造成『Agent 数据平台』。",
+        "🔒 治理与安全加码：多项 roadmap 聚焦 agent 安全——禁止 AI agent 使用 maker 凭据、检测凭据过度共享并强制安全共享，规模化前先立治理。",
+        "⚙️ 工作流即 Agent：agent 节点可作为工作流步骤调用、flow 支持 express 模式提速，自主 Agent 支持只读方式共享给终端用户，扩大触达范围。"
+      ]
+    },
+    {
+      "emoji": "☁️",
+      "title": "Azure AI（Microsoft Foundry）",
+      "points": [
+        "🚀 模型密集发布：一次性推出 MAI-Image-2.5 Pro 与 MAI-Voice-2 Flash，并支持实时多语种转写，Post-Stream Refinement 正式 GA。",
+        "🧠 agent grounding 与生产实践：给出用 Azure AI Search + Foundry IQ 为 Copilot Studio agent 做 grounding 的方案，以及 Standard Agents BYOVNet 的生产网络最佳实践。"
+      ]
+    }
+  ]
+}

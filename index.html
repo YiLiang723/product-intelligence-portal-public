@@ -1,0 +1,1420 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Microsoft 产品更新公开版</title>
+  <script>
+    (() => {
+      const param = new URLSearchParams(window.location.search).get("scoutTheme");
+      const theme =
+        param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --cp-bg: #f7f4ef;
+      --cp-bg-elevated: #fcfbf8;
+      --cp-surface: #ffffff;
+      --cp-surface-soft: #f5f5f5;
+      --cp-border: #e4e0da;
+      --cp-border-strong: #cfc9c1;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-text-soft: #8a8580;
+      --cp-accent: #b11f4b;
+      --cp-accent-hover: #9a1a41;
+      --cp-accent-soft: rgba(177, 31, 75, 0.08);
+      --cp-accent-fg: #ffffff;
+      --cp-link: #0078d4;
+      --cp-card-shadow: 0 0 2px rgba(0,0,0,0.10), 0 1px 2px rgba(0,0,0,0.10);
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --cp-bg: #221f1e;
+      --cp-bg-elevated: #2a2726;
+      --cp-surface: #2c2928;
+      --cp-surface-soft: #33302e;
+      --cp-border: #423e3c;
+      --cp-border-strong: #55504d;
+      --cp-text: #ececec;
+      --cp-text-muted: #b6b1ac;
+      --cp-text-soft: #8f8a85;
+      --cp-accent: #fd8ea1;
+      --cp-accent-hover: #fb7b91;
+      --cp-accent-soft: rgba(253, 142, 161, 0.14);
+      --cp-accent-fg: #1a1a1a;
+      --cp-link: #7fbfff;
+      --cp-card-shadow: 0 0 2px rgba(0,0,0,0.30), 0 1px 2px rgba(0,0,0,0.30);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--cp-bg);
+      color: var(--cp-text);
+      font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: var(--cp-link); text-decoration: none; }
+    .shell { max-width: 1160px; margin: 0 auto; padding: 40px 24px 64px; }
+
+    /* Hero */
+    .hero { margin-bottom: 4px; }
+    .eyebrow { margin: 0 0 10px; color: var(--cp-accent); font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { margin: 0; font-size: clamp(30px, 4.4vw, 46px); line-height: 1.1; letter-spacing: -0.03em; }
+    .hero-desc { margin: 16px 0 0; color: var(--cp-text-muted); max-width: 100%; font-size: 16px; }
+    .hero-meta { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
+    .meta-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--cp-border);
+      background: var(--cp-surface);
+      color: var(--cp-text-muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .meta-tag.accent { border-color: var(--cp-accent); background: var(--cp-accent-soft); color: var(--cp-accent); }
+
+    /* Sticky anchor nav (below hero) */
+    .anchor-nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      margin: 24px 0 8px;
+      padding: 12px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--cp-border);
+      border-radius: 14px;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-card-shadow);
+    }
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--cp-border);
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .nav-pill b {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 22px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 999px;
+      background: var(--cp-accent-soft);
+      color: var(--cp-accent);
+      font-size: 12px;
+    }
+    .nav-pill:hover { border-color: var(--cp-accent); }
+    .nav-legend { margin-left: auto; color: var(--cp-text-soft); font-size: 12px; }
+
+    /* Section headers */
+    .block-title {
+      margin: 40px 0 4px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--cp-text-soft);
+    }
+    .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 16px 0 14px; }
+    .section-head h2 { margin: 0; font-size: 22px; letter-spacing: -0.01em; }
+    .section-count { color: var(--cp-text-soft); font-size: 13px; font-weight: 600; white-space: nowrap; }
+
+    /* AI summary card */
+    .summary-card {
+      margin: 14px 0 18px;
+      padding: 22px 24px;
+      border: 1px solid var(--cp-border);
+      border-left: 4px solid var(--cp-accent);
+      border-radius: 16px;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-card-shadow);
+    }
+    .summary-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .summary-intro { margin: 0 0 16px; color: var(--cp-text); font-size: 15px; line-height: 1.85; }
+    .summary-section { margin-top: 14px; }
+    .summary-section-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--cp-accent);
+      margin-bottom: 6px;
+    }
+    .summary-points {
+      margin: 0;
+      padding-left: 0;
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+    .summary-points li {
+      color: var(--cp-text);
+      font-size: 14.5px;
+      line-height: 1.7;
+      padding-left: 2px;
+    }
+
+    /* Feature cards */
+    .feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .feature-card {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 20px;
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-card-shadow);
+    }
+    .feature-top { display: flex; align-items: center; justify-content: space-between; }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 5px 11px;
+      border-radius: 999px;
+      background: var(--cp-accent-soft);
+      color: var(--cp-accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .feature-date { color: var(--cp-text-soft); font-size: 12px; font-weight: 600; }
+    .feature-card h3 { margin: 0; font-size: 17px; line-height: 1.4; }
+    .feature-desc { margin: 0; color: var(--cp-text-muted); font-size: 14px; flex: 1; }
+    .feature-actions { display: flex; gap: 8px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid transparent;
+    }
+    .btn.primary { background: var(--cp-accent); color: var(--cp-accent-fg); }
+    .btn.primary:hover { background: var(--cp-accent-hover); }
+    .btn.ghost { background: transparent; border-color: var(--cp-border-strong); color: var(--cp-text); }
+    .btn.ghost:hover { border-color: var(--cp-accent); color: var(--cp-accent); }
+
+    /* Item grid */
+    .item-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 16px 18px;
+      border: 1px solid var(--cp-border);
+      border-radius: 14px;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-card-shadow);
+    }
+    .item.is-hidden { display: none; }
+    .item-top { display: flex; align-items: center; gap: 10px; }
+    .item-date { font-size: 12px; font-weight: 700; color: var(--cp-text); }
+    .item-source {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--cp-text-soft);
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: var(--cp-surface-soft);
+    }
+    .item-title { margin: 0; font-size: 15px; line-height: 1.45; }
+    .item-title a { color: var(--cp-text); }
+    .item-title a:hover { color: var(--cp-accent); }
+    .item-desc { margin: 0; color: var(--cp-text-muted); font-size: 13px; }
+    .empty { padding: 28px; text-align: center; color: var(--cp-text-soft); }
+
+    .more-wrap { margin-top: 14px; text-align: center; }
+    .more-btn {
+      padding: 9px 18px;
+      border-radius: 999px;
+      border: 1px solid var(--cp-border-strong);
+      background: var(--cp-surface);
+      color: var(--cp-text);
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .more-btn:hover { border-color: var(--cp-accent); color: var(--cp-accent); }
+
+    /* Sources / footer */
+    .sources {
+      margin-top: 20px;
+      padding: 22px 24px;
+      border: 1px solid var(--cp-border);
+      border-radius: 16px;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-card-shadow);
+    }
+    .sources-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+    .source-col-title {
+      margin-bottom: 10px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--cp-accent);
+    }
+    .source-link {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 8px 0;
+      border-top: 1px solid var(--cp-border);
+      color: var(--cp-text);
+      font-size: 13px;
+    }
+    .source-link:hover { color: var(--cp-accent); }
+    .source-link small { color: var(--cp-text-soft); font-size: 11px; }
+    .footer-meta {
+      margin-top: 18px;
+      color: var(--cp-text-soft);
+      font-size: 13px;
+    }
+
+    @media (max-width: 900px) {
+      .feature-grid { grid-template-columns: 1fr; }
+      .item-grid { grid-template-columns: 1fr; }
+      .sources-grid { grid-template-columns: 1fr 1fr; }
+      .nav-legend { margin-left: 0; width: 100%; }
+    }
+    @media (max-width: 560px) {
+      .sources-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="hero" id="top">
+      <p class="eyebrow">Public product updates</p>
+      <h1>Microsoft 产品更新公开版</h1>
+      <p class="hero-desc">聚合 Microsoft 官方产品更新（M365 Copilot、Copilot Studio、Azure AI），仅保留适合公开分享的内容，数据每日自动更新。</p>
+      <div class="hero-meta">
+        <span class="meta-tag accent">最新更新 2026-07-24 11:03:35</span>
+        <span class="meta-tag">版本 V1.0</span>
+        <span class="meta-tag">近 90 天累计 119 条</span>
+      </div>
+    </header>
+
+    <nav class="anchor-nav">
+      <a class="nav-pill" href="#top"><span>概览</span><b>119</b></a>
+      <a class="nav-pill" href="#m365-copilot"><span>M365 Copilot</span><b>49</b></a><a class="nav-pill" href="#copilot-studio"><span>Copilot Studio</span><b>30</b></a><a class="nav-pill" href="#azure-ai"><span>Azure AI</span><b>40</b></a>
+      <span class="nav-legend">数字 = 近 90 天累计更新条数</span>
+    </nav>
+
+    <div class="block-title">本周重点</div>
+
+    <article class="summary-card">
+      <div class="summary-head">
+        <span class="chip">AI 本周趋势</span>
+        <span class="feature-date">截至 2026-07-24 11:03:35</span>
+      </div>
+      <p class="summary-intro">本周 Microsoft 三大产品线共同指向一个主题：从『能用 Copilot』走向『可规模化、可治理、可生产的企业级 Agent 平台』。以下按产品线拆解本周重点。</p>
+      
+      
+      <div class="summary-section">
+        <div class="summary-section-title">🧩 M365 Copilot</div>
+        <ul class="summary-points">
+          <li>🏢 企业级落地实战：官方分享百万文档、10 万+ 月活、300+ agent 的 Copilot 连接器建设经验，是本周最具参考价值的规模化案例。</li><li>📊 grounding 更强：M365 Copilot 将集成 Power BI（GA 8 月），可直接基于报表与语义模型作答；同时新增 Web grounding 域排除，让回答更贴合组织可信来源。</li><li>🤖 Agent 生态打通：声明式 Agent（含 Actions）登陆 GCC High 与 DoD 主权云；Agent 365 agents 可在 Copilot Chat 与声明式 Agent 中调用，并新增管理者分析仪表盘。</li><li>📱 移动与笔记场景扩展：Copilot Notebooks 多模态捕获、OneNote 移动版摘要问答陆续 GA，Copilot 正从桌面走向移动端全场景。</li>
+        </ul>
+      </div>
+      <div class="summary-section">
+        <div class="summary-section-title">🛠️ Copilot Studio</div>
+        <ul class="summary-points">
+          <li>👨‍💻 面向开发者提速：Dataverse 插件上架 Cursor Marketplace，Power Pages 支持原生 Dataverse 授权，开发者链路进一步打通。</li><li>🔗 数据与分析融合：Link to Fabric UX 刷新、SharePoint 列表可作为知识源，Dataverse 正被打造成『Agent 数据平台』。</li><li>🔒 治理与安全加码：多项 roadmap 聚焦 agent 安全——禁止 AI agent 使用 maker 凭据、检测凭据过度共享并强制安全共享，规模化前先立治理。</li><li>⚙️ 工作流即 Agent：agent 节点可作为工作流步骤调用、flow 支持 express 模式提速，自主 Agent 支持只读方式共享给终端用户，扩大触达范围。</li>
+        </ul>
+      </div>
+      <div class="summary-section">
+        <div class="summary-section-title">☁️ Azure AI（Microsoft Foundry）</div>
+        <ul class="summary-points">
+          <li>🚀 模型密集发布：一次性推出 MAI-Image-2.5 Pro 与 MAI-Voice-2 Flash，并支持实时多语种转写，Post-Stream Refinement 正式 GA。</li><li>🧠 agent grounding 与生产实践：给出用 Azure AI Search + Foundry IQ 为 Copilot Studio agent 做 grounding 的方案，以及 Standard Agents BYOVNet 的生产网络最佳实践。</li>
+        </ul>
+      </div>
+    </article>
+    <div class="feature-grid">
+
+        <article class="feature-card">
+          <div class="feature-top">
+            <span class="chip">M365 Copilot</span>
+            <span class="feature-date">2026-07-24</span>
+          </div>
+          <h3>1 million documents to 300+agents: Building an enterprise-scale Microsoft 365 Copilot connector</h3>
+          <p class="feature-desc">1 million documents. 100,000+ monthly users. 300+ Copilot Studio agents. Here&#39;s what we learned building the Microsoft 3</p>
+          <div class="feature-actions">
+            <a class="btn primary" href="#m365-copilot">查看该分区</a>
+            <a class="btn ghost" href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/1-million-documents-to-300-agents-building-an-enterprise-scale/ba-p/4540155" target="_blank" rel="noreferrer">打开原文</a>
+          </div>
+        </article>
+        <article class="feature-card">
+          <div class="feature-top">
+            <span class="chip">Copilot Studio</span>
+            <span class="feature-date">2026-07-21</span>
+          </div>
+          <h3>Dataverse Plugin for Coding Agents Now Available in Cursor Marketplace</h3>
+          <p class="feature-desc">Today, we are excited to share that the Dataverse plugin is now available in the Cursor Marketplace, giving Cursor users</p>
+          <div class="feature-actions">
+            <a class="btn primary" href="#copilot-studio">查看该分区</a>
+            <a class="btn ghost" href="https://www.microsoft.com/en-us/power-platform/blog/2026/07/21/dataverse-plugin-for-coding-agents-now-available-in-cursor-marketplace/" target="_blank" rel="noreferrer">打开原文</a>
+          </div>
+        </article>
+        <article class="feature-card">
+          <div class="feature-top">
+            <span class="chip">Azure AI</span>
+            <span class="feature-date">2026-07-24</span>
+          </div>
+          <h3>Post-Stream Refinement is now generally available in Microsoft Foundry</h3>
+          <p class="feature-desc">When we introduced Post-Stream Refinement in public preview earlier this year, it closed the oldest trade-off in real-ti</p>
+          <div class="feature-actions">
+            <a class="btn primary" href="#azure-ai">查看该分区</a>
+            <a class="btn ghost" href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/post-stream-refinement-is-now-generally-available-in-microsoft/ba-p/4540174" target="_blank" rel="noreferrer">打开原文</a>
+          </div>
+        </article>
+    </div>
+
+    <div class="block-title">按产品浏览</div>
+
+    <section class="section" id="m365-copilot">
+      <div class="section-head">
+        <h2>M365 Copilot</h2>
+        <span class="section-count">近 90 天累计 49 条</span>
+      </div>
+      <div class="item-grid" data-group="m365-copilot">
+
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-24</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/1-million-documents-to-300-agents-building-an-enterprise-scale/ba-p/4540155" target="_blank" rel="noreferrer">1 million documents to 300+agents: Building an enterprise-scale Microsoft 365 Copilot connector</a></h3>
+            <p class="item-desc">1 million documents. 100,000+ monthly users. 300+ Copilot Studio agents. Here&#39;s what we learned building the Microsoft 3</p>
+          </article>
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-20</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=567891" target="_blank" rel="noreferrer">M365 Copilot 集成 Power BI（GA 2026 年 8 月）</a></h3>
+            <p class="item-desc">M365 Copilot 可对 Power BI 企业数据进行推理，直接基于 Power BI 报表与语义模型给出有依据的答案，用户可用自然语言提问并获得准确回答。</p>
+          </article>
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-20</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=564606" target="_blank" rel="noreferrer">声明式 Agent（含 Actions）登陆 GCC High 与 DoD（已 Launched，GA 2026 年 6 月）</a></h3>
+            <p class="item-desc">声明式 agent 通过 Actions 调用 API、插件与企业工作流，在聊天体验内执行真实操作；现扩展到 GCC High 与 DoD 主权云。</p>
+          </article>
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-20</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=547731" target="_blank" rel="noreferrer">Copilot 许可申请的业务理由（已取消）</a></h3>
+            <p class="item-desc">原计划让用户申请 M365 Copilot 许可时填写业务理由供管理员审批参考；官方已决定不再推进此功能。</p>
+          </article>
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-20</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=503144" target="_blank" rel="noreferrer">M365 Copilot Web grounding 域排除（已 Launched，GA 2026 年 6 月）</a></h3>
+            <p class="item-desc">管理员可指定一组站点，从 M365 Copilot 与 Copilot Chat 的 Web grounding 中排除，使 Copilot 回答符合组织策略与可信来源（#copilotcontrolsystem）。</p>
+          </article>
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-20</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=567895" target="_blank" rel="noreferrer">Copilot Notebooks 多模态捕获（Android，GA 2026 年 9 月）</a></h3>
+            <p class="item-desc">多模态捕获让用户在一次会话中转写音频、拍摄图像、输入笔记，Copilot 随后生成含洞察的结构化 Copilot Page 并保存到指定 Notebook。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-20</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=422324" target="_blank" rel="noreferrer">OneNote 移动版 Copilot 摘要与问答（iPhone，GA 2026 年 8 月）</a></h3>
+            <p class="item-desc">OneNote 移动版新增 Copilot 摘要功能，可对较长页面生成简洁流畅的摘要，并支持随手问答，帮助更快获取关键信息。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-20</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=422323" target="_blank" rel="noreferrer">OneNote 移动版 Copilot 摘要与问答（Android，GA 2026 年 8 月）</a></h3>
+            <p class="item-desc">OneNote 移动版（Android）新增 Copilot 摘要与问答，对长页面生成摘要并支持即时问答。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-20</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=567889" target="_blank" rel="noreferrer">SharePoint 灵活分区编辑改进（GA 2026 年 8 月）</a></h3>
+            <p class="item-desc">SharePoint 页面的 Flexible Sections 增强，提供可视化分栏布局引导、保留网格线与布局引导，让页面布局创建更直观、更可预期。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-20</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=553220" target="_blank" rel="noreferrer">SharePoint『组织内人员』共享链接过期管理策略（已 Launched，GA 2026 年 3 月）</a></h3>
+            <p class="item-desc">管理员可设置组织级策略，让『组织内人员』共享链接在指定期限后自动过期，加强对内部内容访问的控制。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-17</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=567670" target="_blank" rel="noreferrer">在 M365 Copilot Chat 与声明式 Agent 中使用 Agent 365 agents（GA 2026 年 8 月）</a></h3>
+            <p class="item-desc">发布到 Agent 365 的 agents 已在管理中心统一管理；若实现 Agent2Agent 协议，即可作为 connected agent 被 Agent Builder 或 Copilot Studio 调用。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-17</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=567893" target="_blank" rel="noreferrer">Copilot Analytics 新增 Agent 365 管理者仪表盘（GA 2026 年 8 月）</a></h3>
+            <p class="item-desc">经理可在 Copilot Analytics（Insights）中通过 Agent Dashboard 查看经 Agent 365 注册的所有 agent 的活动与历史数据。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-17</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=567890" target="_blank" rel="noreferrer">SharePoint/OneDrive 自动标记容量提升至 50 万文件/天（GA 2026 年 8 月）</a></h3>
+            <p class="item-desc">SharePoint 与 OneDrive 的每租户每日自动标记上限从 10 万提升到 50 万文件，帮助更快为数据打敏感度标签，为 M365 Copilot 就绪打基础。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-16</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=562353" target="_blank" rel="noreferrer">M365 Copilot 会话与回复分享（GA 2026 年 8 月）</a></h3>
+            <p class="item-desc">Session Sharing 分享整段 Copilot 会话，Response Sharing 分享单条回复，接收者以只读视图打开并可在自己的 Copilot 中续接，分享受组织控制。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-16</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/co-work-in-progress/ba-p/4511672" target="_blank" rel="noreferrer">(Co)work in Progress：Cowork 进展随笔</a></h3>
+            <p class="item-desc">Microsoft 365 Copilot 官方博客分享 Cowork 的持续演进思路与产品进展，讲述 Cowork 如何从对话走向跨应用的实际执行。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-16</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/join-us-live-understanding-copilot-cowork-and-managing-copilot/ba-p/4537935" target="_blank" rel="noreferrer">直播预告：读懂 Copilot Cowork 与管理 Copilot Credits</a></h3>
+            <p class="item-desc">AMA 直播预告：谁该用 Cowork、如何分配与管理 Copilot Credits、采用与治理最佳实践，以及在成本可见可控前提下扩大 Cowork 使用。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-15</span>
+              <span class="item-source">Microsoft Learn</span>
+            </div>
+            <h3 class="item-title"><a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/release-notes" target="_blank" rel="noreferrer">Agent Builder 可提交 Agent Store，Copilot Prompt Gallery 支持公司级发布</a></h3>
+            <p class="item-desc">Microsoft 365 Copilot Release Notes 发布多项 GA 功能，包括 Agent Builder 提交到组织 Agent Store、公司级 Prompt Gallery 发布、MCP agents 进入 Office apps、Federated Copilot Co…</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-14</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=567667" target="_blank" rel="noreferrer">Copilot Analytics（Insights）Agent 365 仪表盘（GA 2026 年 7 月）</a></h3>
+            <p class="item-desc">客户可在 Copilot Analytics（Insights）通过 Agent Dashboard 查看经 Agent 365 注册的所有 agent 活动，领导层可查看历史数据。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-14</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/what-s-new-in-microsoft-365-copilot-june-2026/ba-p/4529572" target="_blank" rel="noreferrer">Microsoft 365 Copilot 六月更新一览（What&#39;s New | June 2026）</a></h3>
+            <p class="item-desc">官方月度汇总：Microsoft 365 Copilot 在 Chat、Cowork、各 Office 应用、agent 与管理侧的六月新功能合集。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-13</span>
+              <span class="item-source">Microsoft Learn</span>
+            </div>
+            <h3 class="item-title"><a href="https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/prerequisites?tabs=customers" target="_blank" rel="noreferrer">Copilot extensibility 前置条件与授权模型</a></h3>
+            <p class="item-desc">官方文档明确 Microsoft 365 Copilot Chat、Copilot Studio pay-as-you-go、Copilot Credits、Microsoft 365 Copilot license、Developer license 等前置条件和能力边界。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-10</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/available-today-openai-s-gpt-5-6-in-microsoft-365-copilot/ba-p/4533152" target="_blank" rel="noreferrer">OpenAI GPT-5.6 正式登陆 Microsoft 365 Copilot</a></h3>
+            <p class="item-desc">GPT-5.6 系列即日起在 Word、Excel、PowerPoint、Chat 和 Cowork 可用，针对知识工作优化，成为 Copilot 首选模型，为多步骤 agentic 工作提供更强推理。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-07</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=567315" target="_blank" rel="noreferrer">Microsoft Planner 能力进入 Microsoft Cowork（GA 2026 年 9 月）</a></h3>
+            <p class="item-desc">用户将可在 Cowork 中查看、创建、更新 Planner 的计划/桶/目标/任务，并让 Cowork 跨 M365 执行任务，经批准写回 Planner。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-02</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/available-today-anthropic-s-claude-sonnet-5-in-microsoft-365/ba-p/4532188" target="_blank" rel="noreferrer">Anthropic Claude Sonnet 5 登陆 Microsoft 365 Copilot</a></h3>
+            <p class="item-desc">Claude Sonnet 5 即日起在 Cowork 和 PowerPoint 逐步上线，面向 agentic 多步骤工作，性能接近 Opus 4.8 但价格更低。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-02</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/sales-agent-is-now-generally-available-bringing-customer-and/ba-p/4532629" target="_blank" rel="noreferrer">Sales Agent 正式 GA：把客户与商机情报带入工作流</a></h3>
+            <p class="item-desc">官方宣布 Sales Agent 全面可用，将客户与 deal intelligence 直接融入销售日常工作流，辅助跟进与洞察。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-30</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/the-workflow-is-the-product-copilot-cowork-plugins-change-what/ba-p/4531933" target="_blank" rel="noreferrer">工作流即产品：Copilot Cowork 插件改变 AI 能为企业做的事</a></h3>
+            <p class="item-desc">官方阐述 Cowork 插件如何把 AI 能力扩展到具体业务工作流，让 Cowork 执行更贴合企业流程的多步骤任务。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-26</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=565870" target="_blank" rel="noreferrer">Purview DLP 保护 M365 Copilot 与 Copilot Chat 的外部网页搜索（GA 2026 年 7 月）</a></h3>
+            <p class="item-desc">扩展 Purview DLP，实时阻止 M365 Copilot 与 Copilot Chat 将敏感数据用于外部网页搜索，降低数据泄露与过度共享风险。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-26</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=566703" target="_blank" rel="noreferrer">Microsoft Edge 升级版 Copilot 新标签页（GA 2026 年 9 月）</a></h3>
+            <p class="item-desc">在 Copilot 新标签页用一个搜索框搜索、聊天、探索网页，提供 Copilot 建议动作与精选工作内容，帮助更快完成任务。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-25</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/learning-agent-now-generally-available-personalized-ai/ba-p/4524571" target="_blank" rel="noreferrer">Learning Agent 正式 GA：为每位员工提供个性化 AI 技能提升</a></h3>
+            <p class="item-desc">官方宣布 Learning Agent 全面可用，面向员工提供个性化的 AI 学习与 upskilling 体验。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-25</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/microsoft-365/blog/2026/06/25/copilot-in-excel-built-for-the-era-of-frontier-finance/" target="_blank" rel="noreferrer">Copilot in Excel：为 Frontier Finance 时代打造</a></h3>
+            <p class="item-desc">Microsoft 365 官方博客阐述 Copilot in Excel 在财务场景的数据分析与建模能力，用实践证明其价值。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-16</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/microsoft-365/blog/2026/06/16/copilot-cowork-is-now-generally-available/" target="_blank" rel="noreferrer">Copilot Cowork 正式 GA</a></h3>
+            <p class="item-desc">Microsoft 365 官方博客宣布 Copilot Cowork 全面可用；Cowork 是 Frontier 项目历史上增长最快、满意度名列前茅的能力。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-12</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/what-s-new-in-notebooks-may-2026/ba-p/4519838" target="_blank" rel="noreferrer">Copilot Notebooks 五月更新（What&#39;s New in Notebooks | May 2026）</a></h3>
+            <p class="item-desc">官方汇总 Copilot Notebooks 的五月新能力与改进。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-11</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/available-today-anthropic-claude-fable-5-in-microsoft-365/ba-p/4526832" target="_blank" rel="noreferrer">Anthropic Claude Fable 5 登陆 Microsoft 365 Copilot</a></h3>
+            <p class="item-desc">官方宣布 Claude Fable 5 在 Microsoft 365 Copilot 可用，进一步丰富多模型矩阵。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-11</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/what-s-new-in-notebooks-june-2026/ba-p/4525625" target="_blank" rel="noreferrer">Copilot Notebooks 六月更新（What&#39;s New in Notebooks | June 2026）</a></h3>
+            <p class="item-desc">官方汇总 Copilot Notebooks 的六月新能力，围绕知识整理、来源 grounding 与协作的改进。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-08</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/what-s-new-in-microsoft-365-copilot-may-2026/ba-p/4522010" target="_blank" rel="noreferrer">Microsoft 365 Copilot 五月更新一览（What&#39;s New | May 2026）</a></h3>
+            <p class="item-desc">官方月度汇总：Microsoft 365 Copilot 五月在 Chat、Cowork、Office 应用与 agent 的新功能合集。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-02</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/microsoft-365/blog/2026/06/02/introducing-microsoft-scout-your-always-on-personal-agent/" target="_blank" rel="noreferrer">推出 Microsoft Scout：始终在线的个人 agent</a></h3>
+            <p class="item-desc">Microsoft 365 官方博客推出 Microsoft Scout——集成在日常 M365 应用、grounded 在工作上下文的个人 agent。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-02</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/microsoft-365/blog/2026/06/02/announcing-the-new-work-iq-apis/" target="_blank" rel="noreferrer">发布全新 Work IQ API</a></h3>
+            <p class="item-desc">Microsoft 365 官方博客发布 Work IQ API；Work IQ 是理解组织『工作如何完成』的新智能层，为 Copilot 与 agent 提供更深工作上下文。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-29</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/finance-agent-benchmark-evaluating-and-improving-ai-for-finance/ba-p/4522978" target="_blank" rel="noreferrer">Finance Agent Benchmark：评估并改进面向财务的 AI</a></h3>
+            <p class="item-desc">官方介绍 Finance Agent 的基准评测方法，如何评估与提升财务场景 AI 的准确性与可靠性。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-28</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/microsoft-365/blog/2026/05/28/introducing-microsoft-365-business-with-copilot-the-new-standard-for-small-business/" target="_blank" rel="noreferrer">推出内置 Copilot 的 Microsoft 365 Business</a></h3>
+            <p class="item-desc">Microsoft 365 官方博客宣布 7 月 1 日起推出内置 Copilot 的全新 Microsoft 365 Business SKU，面向中小企业。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-28</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/available-today-anthropic-claude-opus-4-8-in-microsoft-365/ba-p/4523405" target="_blank" rel="noreferrer">Anthropic Claude Opus 4.8 登陆 Microsoft 365 Copilot</a></h3>
+            <p class="item-desc">官方宣布 Claude Opus 4.8 在 Microsoft 365 Copilot 可用，面向高复杂度推理任务。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-28</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/microsoft-365/blog/2026/05/28/introducing-a-new-design-for-microsoft-365-copilot/" target="_blank" rel="noreferrer">全新设计的 Microsoft 365 Copilot</a></h3>
+            <p class="item-desc">Microsoft 365 官方博客介绍重新设计的 Copilot 应用及其在各 M365 应用中的呈现——更简洁、更快、更贴合工作流。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-27</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/recertified-how-microsoft-365-copilot-continues-to-earn-trust/ba-p/4521693" target="_blank" rel="noreferrer">再认证：Microsoft 365 Copilot 如何持续赢得信任、一年间有何变化</a></h3>
+            <p class="item-desc">官方讲述 Copilot 在安全与合规认证方面的持续投入与一年间的变化，说明信任与合规如何维持。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-27</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/scaling-the-reach-of-finance-what-s-next-with-finance-agent-in/ba-p/4522976" target="_blank" rel="noreferrer">扩大财务触达：Microsoft 365 Copilot 中 Finance Agent 的下一步</a></h3>
+            <p class="item-desc">官方介绍 Finance Agent 在 Microsoft 365 Copilot 中的能力扩展与后续规划。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-13</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/how-workday-and-microsoft-are-redefining-the-agentic-workplace/ba-p/4518532" target="_blank" rel="noreferrer">Workday 与 Microsoft 如何重新定义 agentic 工作场所</a></h3>
+            <p class="item-desc">官方介绍 Workday 与 Microsoft 的合作，如何在 Copilot/agent 生态中打通业务系统与工作流。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-12</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=561920" target="_blank" rel="noreferrer">Agent Builder 支持 SharePoint 列表作为知识源（已 Launched，GA 2026 年 6 月）</a></h3>
+            <p class="item-desc">Agent Builder 现支持用 SharePoint 列表作为 agent 知识源，可 ground 在结构化列表数据（单表最多 2 万条），供用户提问获取答案。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-07</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/available-today-gpt-5-5-instant-in-microsoft-365-copilot/ba-p/4517084" target="_blank" rel="noreferrer">GPT-5.5 Instant 登陆 Microsoft 365 Copilot</a></h3>
+            <p class="item-desc">官方宣布 GPT-5.5 Instant 在 Microsoft 365 Copilot 可用，面向低延迟即时响应场景。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-05</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-365-copilot-blog/federated-copilot-connectors-bringing-real-time-enterprise-data/ba-p/4515993" target="_blank" rel="noreferrer">Federated Copilot Connectors：把实时企业数据带入 Microsoft 365 Copilot</a></h3>
+            <p class="item-desc">官方介绍 Federated Copilot Connectors，实现对实时企业数据的 grounding，而非仅索引静态内容。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-05</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/microsoft-365/blog/2026/05/05/copilot-cowork-from-conversation-to-action-across-skills-integrations-and-devices/" target="_blank" rel="noreferrer">Copilot Cowork：跨技能、集成与设备从对话走向行动</a></h3>
+            <p class="item-desc">Microsoft 365 官方博客宣布 Cowork 的更多能力，扩展其在技能、集成与设备上的执行范围。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-05</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/microsoft-365/blog/2026/05/05/microsoft-365-copilot-human-agency-and-the-opportunity-for-every-organization/" target="_blank" rel="noreferrer">Microsoft 365 Copilot、人的能动性与每个组织的机会</a></h3>
+            <p class="item-desc">Microsoft 365 官方博客结合 Work Trend Index，探讨当 AI 与 agent 承担更多执行时，人如何拥有更多能动性去主导成果。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-04-21</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=560705" target="_blank" rel="noreferrer">Copilot 仪表盘新增 Power user 洞察（GA 2026 年 8 月）</a></h3>
+            <p class="item-desc">通过 Copilot 仪表盘的 power user 洞察，了解哪些用户正在养成使用 Copilot 的习惯。</p>
+          </article>
+      </div>
+      <div class="more-wrap"><button class="more-btn" type="button" data-target="m365-copilot" data-total="49">查看全部 49 条 ▾</button></div>
+    </section>
+
+    <section class="section" id="copilot-studio">
+      <div class="section-head">
+        <h2>Copilot Studio</h2>
+        <span class="section-count">近 90 天累计 30 条</span>
+      </div>
+      <div class="item-grid" data-group="copilot-studio">
+
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-21</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/power-platform/blog/2026/07/21/dataverse-plugin-for-coding-agents-now-available-in-cursor-marketplace/" target="_blank" rel="noreferrer">Dataverse Plugin for Coding Agents Now Available in Cursor Marketplace</a></h3>
+            <p class="item-desc">Today, we are excited to share that the Dataverse plugin is now available in the Cursor Marketplace, giving Cursor users</p>
+          </article>
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-20</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/power-platform/blog/2026/07/20/link-to-fabric-ux-refresh/" target="_blank" rel="noreferrer">Announcing Link to Fabric UX refresh</a></h3>
+            <p class="item-desc">We are refreshing how you connect Microsoft Dataverse to your analytics stack. The post Announcing Link to Fabric UX ref</p>
+          </article>
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-20</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=567894" target="_blank" rel="noreferrer">Copilot Studio：将自主 Agent 以只读方式共享给终端用户（GA 2027 年 1 月）</a></h3>
+            <p class="item-desc">此前自主 agent 只能由 maker 使用与管理；Run-only 共享让 maker 可安全地把自主 agent 共享给终端用户使用，扩大 agent 触达范围。</p>
+          </article>
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-10</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=566999" target="_blank" rel="noreferrer">Copilot Studio：为 agent/app 调用的 flow 启用 express 模式（GA 2026 年 11 月）</a></h3>
+            <p class="item-desc">express 模式显著加速 flow 运行，减少超时导致的失败与中断，为 agent/app 提供及时可靠响应。</p>
+          </article>
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-08</span>
+              <span class="item-source">Microsoft Learn</span>
+            </div>
+            <h3 class="item-title"><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management" target="_blank" rel="noreferrer">Copilot Studio 计费与 Copilot Credits 基线</a></h3>
+            <p class="item-desc">官方文档描述 Copilot Studio 通过 pay-as-you-go meter 或 Copilot Credit packs 计费；列出 classic/generative answer、agent action、tenant graph grounding、AI tools、voice…</p>
+          </article>
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-07</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=566859" target="_blank" rel="noreferrer">Copilot Studio：用 SharePoint 列表作为知识源（GA 2026 年 9 月）</a></h3>
+            <p class="item-desc">原生支持把 SharePoint 列表作为 Copilot Studio agent 的知识源，用最新业务数据 ground AI 回复。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-07</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/power-platform/blog/power-pages/native-dataverse-authorization-public-preview-for-stronger-security-in-power-pages/" target="_blank" rel="noreferrer">Power Pages 原生 Dataverse 授权（公共预览）</a></h3>
+            <p class="item-desc">Power Platform 官方博客宣布 Power Pages 原生 Dataverse 授权进入公共预览：授权直接在 Dataverse 强制执行，提供更强安全、更好审计可见性、列级安全与自定义 Scope 行级访问。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-06</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/power-platform/blog/2026/07/06/dataverse-july2026/" target="_blank" rel="noreferrer">Dataverse 作为 Agent 数据平台：2026 年 7 月更新</a></h3>
+            <p class="item-desc">Power Platform 官方博客总结 Dataverse 最新改进：插件扩展到 Claude/Cursor/GitHub Copilot 等编码 agent 市场、60+ MCP server 目录、认证合作伙伴 MCP、内部 MCP 纳入企业治理。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-02</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=566997" target="_blank" rel="noreferrer">Copilot Studio：禁止 AI agent 使用 maker 凭据认证（GA 2026 年 8 月）</a></h3>
+            <p class="item-desc">管理员可禁止 AI agent 使用 maker 凭据，防止对敏感系统/数据的未授权访问，提升安全与合规。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-01</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=566998" target="_blank" rel="noreferrer">Copilot Studio：用 agent 节点把 agent 作为工作流步骤调用（GA 2026 年 9 月）</a></h3>
+            <p class="item-desc">agent 节点把推理直接嵌入工作流，一步内推理数据、调用工具并返回结果，减少人工交接。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-01</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=566873" target="_blank" rel="noreferrer">Copilot Studio：检测凭据过度共享、强制安全共享（GA 2026 年 9 月）</a></h3>
+            <p class="item-desc">检测身份过度共享，当 agent/flow 依赖不安全身份（如 maker 凭据）时阻止共享，强制安全共享策略。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-17</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/copilot-studio-blog/meet-the-new-copilot-studio-rebuilt-for-more-complex-multi-step/ba-p/4526488" target="_blank" rel="noreferrer">全新 Copilot Studio：为更复杂的多步骤工作重构</a></h3>
+            <p class="item-desc">Copilot Studio 官方博客宣布重构后的 Copilot Studio，支持构建更强、可协作、能处理复杂多步骤任务的 agent 与工作流。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-15</span>
+              <span class="item-source">Microsoft Learn</span>
+            </div>
+            <h3 class="item-title"><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new" target="_blank" rel="noreferrer">Copilot Studio 全新 agent 体验（生产就绪预览）</a></h3>
+            <p class="item-desc">Learn What&#39;s new（2026 年 6 月）：全新 agent 体验采用增强编排运行时，提升回复质量与推理，与经典体验并存；可用 Microsoft IQ 连接组织数据、构建可复用 skills、开启 memory。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-15</span>
+              <span class="item-source">Microsoft Learn</span>
+            </div>
+            <h3 class="item-title"><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new" target="_blank" rel="noreferrer">Windows 365 for Agents MCP server GA</a></h3>
+            <p class="item-desc">Learn What&#39;s new（2026 年 6 月）：Windows 365 for Agents MCP server 正式 GA，让 agent 全面操控 Windows 365 云 PC（桌面交互、浏览器自动化、语义 UI 检查）。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-15</span>
+              <span class="item-source">Microsoft Learn</span>
+            </div>
+            <h3 class="item-title"><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new" target="_blank" rel="noreferrer">Copilot Studio 可选 Claude Sonnet 5 / GPT-5.5 Chat 作为主模型（GA）</a></h3>
+            <p class="item-desc">Learn What&#39;s new（2026 年 6 月）：可为 agent 选择 Claude Sonnet 5 或 GPT-5.5 Chat 作为主 AI 模型以提升回复质量与推理；并可连接 Foundry IQ、连接其他 agent（预览）。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-11</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/power-platform/blog/2026/06/11/whats-new-in-power-platform-june-2026-feature-update/" target="_blank" rel="noreferrer">Power Platform 六月功能更新一览</a></h3>
+            <p class="item-desc">官方月度汇总：Power Apps MCP server 引入企业 agent 闭环学习、release planner code app、Power Automate 桌面流版本对比与从桌面流启动 Power App 等。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-26</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/copilot-studio/new-and-improved-computer-using-agents-a-new-workflows-experience-and-real-time-voice-experiences/" target="_blank" rel="noreferrer">Copilot Studio 五月更新：computer-using agents、全新工作流与实时语音</a></h3>
+            <p class="item-desc">官方博客介绍 Copilot Studio 五月更新：computer-using agents 正式 GA，重新设计的 workflows，以及 Work IQ 扩展性与实时语音体验。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-15</span>
+              <span class="item-source">Microsoft Learn</span>
+            </div>
+            <h3 class="item-title"><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new" target="_blank" rel="noreferrer">Computer use 正式 GA、Entra Agent ID、agent 清单（2026 年 5 月）</a></h3>
+            <p class="item-desc">Learn What&#39;s new（2026 年 5 月）：Computer use GA；新增 M365 Copilot 节点、基于同意的录音、agent 清单 schema（管理中心审计）、Entra Agent ID（预览，按 agent 作用域化连接器权限/条件访问/DLP）。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-15</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=562221" target="_blank" rel="noreferrer">Copilot Studio：在 agent 工作流中使用 MCP 兼容工具（GA 2026 年 6 月）</a></h3>
+            <p class="item-desc">在 agentic 工作流中集成 MCP 兼容工具，接入专有系统/动态知识/自定义操作，提升可扩展性与复用。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-15</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=562220" target="_blank" rel="noreferrer">Copilot Studio：用 computer use 强化工作流 UI 自动化（GA 2026 年 10 月）</a></h3>
+            <p class="item-desc">把有弹性的 AI 驱动 UI 自动化加入工作流，随网站/应用变化动态适配，管理员保留治理控制。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-13</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/copilot-studio-blog/computer-using-agents-in-microsoft-copilot-studio-are-now/ba-p/4519427" target="_blank" rel="noreferrer">Copilot Studio 中的 computer-using agents 正式 GA</a></h3>
+            <p class="item-desc">官方宣布 computer-using agents 在 Copilot Studio 全面可用，可自动化长尾、UI 驱动的业务操作，让 agent 真正『动手做事』。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-12</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/copilot-studio-blog/4-ways-to-build-a-curated-agent-store-and-scale-agent-adoption/ba-p/4518575" target="_blank" rel="noreferrer">构建精选 Agent Store、扩大 agent 采用的 4 种方式</a></h3>
+            <p class="item-desc">官方分享如何搭建精选的 Agent Store 并规模化 agent 采用（引用 2026 Work Trend Index：58% 员工已在使用）。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-11</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/microsoft-copilot/blog/copilot-studio/new-and-improved-agent-governance-intelligent-workflows-and-connected-app-experiences/" target="_blank" rel="noreferrer">Copilot Studio 四月更新：agent 治理、智能工作流与连接应用体验</a></h3>
+            <p class="item-desc">官方博客介绍 Copilot Studio 四月更新：workflows 更新、对 agent 运营的更强控制，以及扩展的 agent usage estimator。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-11</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/copilot-studio-blog/work-iq-api-public-preview-build-copilot-powered-agents-with-a2a/ba-p/4516286" target="_blank" rel="noreferrer">Work IQ API 公共预览：用 A2A 构建 Copilot 驱动的 agent</a></h3>
+            <p class="item-desc">官方宣布 Work IQ API 进入公共预览，向开发者开放 M365 Copilot 所用的底层智能能力，支持 Agent2Agent（A2A）构建。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-11</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/copilot-studio-blog/new-updates-administering-and-governing-agents-whitepaper-v3-2/ba-p/4517044" target="_blank" rel="noreferrer">《Agent 管理与治理》白皮书 v3.2 更新</a></h3>
+            <p class="item-desc">官方更新 Administering and Governing Agents 白皮书 v3.2，面向 agent 从试点走向生产时 IT 管理员关注的治理问题。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-05</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/copilot-studio-blog/read-only-analytics-access-and-custom-metrics-now-available-in/ba-p/4516824" target="_blank" rel="noreferrer">Copilot Studio 上线只读分析访问与自定义指标</a></h3>
+            <p class="item-desc">官方发布 Copilot Studio 只读分析访问与自定义指标，帮助 IT 团队在不放开管理权限的前提下把 agent 分析转化为业务洞察。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-04-30</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=561026" target="_blank" rel="noreferrer">Power Automate：用 SharePoint 表单+DocGen 自动生成文档（GA 2026 年 6 月）</a></h3>
+            <p class="item-desc">新增 Power Automate 操作，基于 SharePoint 的 DocGen 表单从模板自动生成文档（预览）。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-04-29</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/microsoft-365/roadmap?id=561025" target="_blank" rel="noreferrer">Power Automate：SharePoint 表单的触发器与操作（GA 2026 年 6 月）</a></h3>
+            <p class="item-desc">为 SharePoint 表单新增 Power Automate 触发器与操作，可基于列表/上传/文档生成表单的响应构建自动化。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-04-29</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/copilot-studio-blog/automate-agent-evaluation-with-the-evaluation-apis/ba-p/4511653" target="_blank" rel="noreferrer">用 Evaluation API 自动化 agent 评估</a></h3>
+            <p class="item-desc">官方介绍 Copilot Studio 的 Evaluation API，自动化验证 agent 是否按预期作答、正确用工具，确保质量可靠。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-04-15</span>
+              <span class="item-source">Microsoft Learn</span>
+            </div>
+            <h3 class="item-title"><a href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new" target="_blank" rel="noreferrer">实时语音 agent、语音保持/恢复、评估自动触发（2026 年 4 月）</a></h3>
+            <p class="item-desc">Learn What&#39;s new（2026 年 4 月）：为 Copilot Studio 与 Dynamics 365 Contact Center 构建实时语音 agent（NLU、多语种、知识集成、语音调优），并支持语音保持/恢复、通过连接器自动触发 agent 评估。</p>
+          </article>
+      </div>
+      <div class="more-wrap"><button class="more-btn" type="button" data-target="copilot-studio" data-total="30">查看全部 30 条 ▾</button></div>
+    </section>
+
+    <section class="section" id="azure-ai">
+      <div class="section-head">
+        <h2>Azure AI</h2>
+        <span class="section-count">近 90 天累计 40 条</span>
+      </div>
+      <div class="item-grid" data-group="azure-ai">
+
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-24</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/post-stream-refinement-is-now-generally-available-in-microsoft/ba-p/4540174" target="_blank" rel="noreferrer">Post-Stream Refinement is now generally available in Microsoft Foundry</a></h3>
+            <p class="item-desc">When we introduced Post-Stream Refinement in public preview earlier this year, it closed the oldest trade-off in real-ti</p>
+          </article>
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-24</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/for-the-first-time-real-time-transcription-goes-multilingual/ba-p/4539089" target="_blank" rel="noreferrer">For the first time, real-time transcription goes multilingual</a></h3>
+            <p class="item-desc">When we introduced Post-Stream Refinement earlier this year, it closed the oldest gap in real-time speech: you could fin</p>
+          </article>
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-24</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/introducing-mai-image-2-5-pro-and-mai-voice-2-flash-in-microsoft/ba-p/4539446" target="_blank" rel="noreferrer">Introducing MAI-Image-2.5 Pro and MAI-Voice-2 Flash in Microsoft Foundry</a></h3>
+            <p class="item-desc">One of the core principles in Microsoft Foundry is giving customers flexibility to choose the right model for the right </p>
+          </article>
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-23</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/grounding-copilot-studio-agents-with-azure-ai-search-and-foundry/ba-p/4539337" target="_blank" rel="noreferrer">Grounding Copilot Studio Agents with Azure AI Search and Foundry IQ</a></h3>
+            <p class="item-desc">An employee opens the HR agent and asks, 『How much PTO do I accrue each month?『 A few minutes later, someone else asks, </p>
+          </article>
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-23</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/design-the-network-before-you-deploy-best-practices-for/ba-p/4537860" target="_blank" rel="noreferrer">Design the Network Before You Deploy: Best Practices for Microsoft Foundry Standard Agents BYOVNet</a></h3>
+            <p class="item-desc">Ask any enterprise team standing up Microsoft Foundry in production and you&#39;ll hear the same non-negotiable: the agent c</p>
+          </article>
+          <article class="item">
+            <div class="item-top">
+              <span class="item-date">2026-07-22</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/choosing-the-right-starting-point-for-enterprise-ai-agents-with/ba-p/4535024" target="_blank" rel="noreferrer">Choosing the Right Starting Point for Enterprise AI Agents with Copilot Studio and Microsoft Foundry</a></h3>
+            <p class="item-desc">Choosing the Right Starting Point for Enterprise AI Agents with Copilot Studio and Microsoft Foundry Enterprise AI conve</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-20</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://azure.microsoft.com/en-us/updates/" target="_blank" rel="noreferrer">保护 Application Insights 与 Microsoft Foundry 中的敏感生成式 AI 遥测（公共预览）</a></h3>
+            <p class="item-desc">Azure 服务更新：公共预览，保护 Application Insights 与 Microsoft Foundry 中的敏感生成式 AI 遥测数据，降低在可观测性数据中暴露敏感内容的风险。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-16</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/agents-can-learn-with-memory-in-microsoft-foundry-agent-service/ba-p/4535431" target="_blank" rel="noreferrer">Foundry Agent Service 中 agent 可用 Memory 学习</a></h3>
+            <p class="item-desc">官方介绍 Foundry Agent Service 的 Memory 能力，让 agent 跨任务记住上下文、减少重复失败。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-16</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/choose-the-right-speech-and-voice-model/ba-p/4533856" target="_blank" rel="noreferrer">如何选择合适的语音与声音模型</a></h3>
+            <p class="item-desc">官方指南：在 Microsoft Foundry 中按场景选择语音/声音模型，而非追求单一『最佳』模型。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-15</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://azure.microsoft.com/updates?id=563701" target="_blank" rel="noreferrer">Agent Framework：GitHub Copilot 与 Claude Code 连接器 GA</a></h3>
+            <p class="item-desc">Agent Framework 发布 GitHub Copilot 与 Claude Code 的 GA 连接器，.NET/Python agent 可无需自写适配器即可把编码任务委派给二者。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-15</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://azure.microsoft.com/updates?id=563571" target="_blank" rel="noreferrer">Agent Framework：多智能体编排模式（含 Magentic）GA</a></h3>
+            <p class="item-desc">Microsoft Agent Framework 的多智能体编排模式正式 GA，含动态 Magentic 模式（GAIA 基准 38%，AssistantBench/WebArena 具竞争力）。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-15</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://azure.microsoft.com/updates?id=563546" target="_blank" rel="noreferrer">Agent Framework：Agent Harness 生产运行时 GA</a></h3>
+            <p class="item-desc">Agent Framework 的 Agent Harness（agent 生产运行时）正式 GA，preview 上的 agent 代码可向后兼容地迁移到生产。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-15</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://azure.microsoft.com/updates?id=564312" target="_blank" rel="noreferrer">Foundry Agent Framework：C#/Python 多智能体编排 SDK（发布）</a></h3>
+            <p class="item-desc">Microsoft Foundry 推出统一的多智能体编排 SDK（C# 与 Python），整合原先分散在 AutoGen 与 Semantic Kernel 的模式，为开发者提供一致的抽象。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-15</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://azure.microsoft.com/updates?id=564071" target="_blank" rel="noreferrer">Agent Framework：追踪（Tracing）公共预览（Python/.NET）</a></h3>
+            <p class="item-desc">Microsoft Foundry 为 Agent Framework 提供 Python 与 .NET 的 tracing（公共预览），帮助观测 agent 的推理、工具调用与模型交互。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-15</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://azure.microsoft.com/en-us/blog/azure-databricks-delivers-proven-business-value/" target="_blank" rel="noreferrer">Azure Databricks 交付经验证的业务价值（Forrester TEI）</a></h3>
+            <p class="item-desc">Azure 官方博客发布 Forrester TEI：复合组织三年实现 331% ROI、5810 万美元 NPV、六个月内回本；重点讲 Azure Databricks Genie 与 Copilot Cowork/Teams/M365 Copilot 的自然语言集成。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-15</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/answers-you-can-trust-grounding-enterprise-agents-with-foundry/ba-p/4536594" target="_blank" rel="noreferrer">可信答案：用 Foundry IQ 为企业 agent 做 grounding</a></h3>
+            <p class="item-desc">官方讲述用 Foundry IQ 为企业 agent 提供可信数据 grounding，解决模型『自信但不准』的信任问题。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-15</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/implementing-multi-agent-orchestration-in-microsoft-copilot/ba-p/4494717" target="_blank" rel="noreferrer">在 Copilot Studio 中实现多智能体编排</a></h3>
+            <p class="item-desc">官方介绍在 Copilot Studio 中实现多 agent 编排，解决单 agent 难以处理多步骤跨域场景的问题。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-09</span>
+              <span class="item-source">Roadmap</span>
+            </div>
+            <h3 class="item-title"><a href="https://azure.microsoft.com/updates?id=567431" target="_blank" rel="noreferrer">OpenAI GPT-5.6 在 Azure Databricks GA</a></h3>
+            <p class="item-desc">OpenAI GPT-5.6（在 Microsoft Foundry 采购）现可通过 Azure Databricks 的 Model Serving Endpoint 使用，Foundry 与 Databricks 深度集成。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-09</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://azure.microsoft.com/en-us/blog/frontier-models-and-production-agents-advancing-microsoft-foundry-for-the-agentic-era/" target="_blank" rel="noreferrer">前沿模型与生产级 agent：推进 Microsoft Foundry 迈入 agentic 时代</a></h3>
+            <p class="item-desc">Azure 官方博客介绍 Microsoft Foundry 面向 agentic 时代的演进——前沿模型接入与生产级 agent 的构建、评估与运行能力。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-09</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/microsoft-foundry-model-deployment-pricing-update/ba-p/4535385" target="_blank" rel="noreferrer">Microsoft Foundry 模型部署定价更新</a></h3>
+            <p class="item-desc">官方宣布 Foundry 模型部署在 EU Data Zone 及美国以外区域部署的定价更新，9 月起生效。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-09</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/frontier-tuning-a-shift-from-classic-fine-tuning/ba-p/4526001" target="_blank" rel="noreferrer">Frontier Tuning：从传统微调的一次转变</a></h3>
+            <p class="item-desc">官方介绍 Frontier Tuning，减少 agent 在每个任务上重复学习业务上下文带来的 token 与预算消耗。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-09</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/monitoring-observability-in-microsoft-foundry-part-2/ba-p/4532674" target="_blank" rel="noreferrer">Foundry 监控与可观测性（下）：配置与运维</a></h3>
+            <p class="item-desc">系列第二篇：讲 agent 进入生产后如何配置监控与可观测性，从『能否观测』走向运维实操。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-08</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/foundry-iq-is-now-in-copilot-studio-bring-your-enterprise-data/ba-p/4534635" target="_blank" rel="noreferrer">Foundry IQ 进入 Copilot Studio：为每次 agent 对话带来企业数据</a></h3>
+            <p class="item-desc">官方宣布 Foundry IQ 进入 Copilot Studio，把企业数据带入每一次 agent 对话，解决 agent 数据接入难题。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-08</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/before-you-ship-your-agent-a-five-step-path-to-evaluations-you/ba-p/4532311" target="_blank" rel="noreferrer">上线 agent 前：可信评估的五步法</a></h3>
+            <p class="item-desc">官方给出上线 agent 前建立可信评估的五步路径，帮助团队对 agent 质量建立信心。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-08</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/introducing-roi-for-agents-in-foundry/ba-p/4531970" target="_blank" rel="noreferrer">在 Foundry 中引入 agent 的 ROI 度量</a></h3>
+            <p class="item-desc">官方介绍在 Foundry Agent Service 与更广生态中度量 agent ROI 的能力。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-06</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/introducing-kimi-k2-7-code-in-microsoft-foundry/ba-p/4532286" target="_blank" rel="noreferrer">Microsoft Foundry 引入 Kimi K2.7 Code</a></h3>
+            <p class="item-desc">官方宣布 Kimi K2.7 Code 登陆 Foundry，面向跨大型代码库重构、多文件特性开发等软件工程场景。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-02</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://azure.microsoft.com/en-us/blog/meet-brain-the-ai-system-behind-azure-reliability/" target="_blank" rel="noreferrer">认识 Brain：Azure 可靠性背后的 AI 系统</a></h3>
+            <p class="item-desc">Azure 官方博客介绍 Brain——支撑 Azure 可靠性的 AI 系统，如何用 AI 提升平台稳定性与运维智能。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-02</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/foundry-control-plane-and-agent-365-two-control-planes-walk-into/ba-p/4520185" target="_blank" rel="noreferrer">Foundry 控制平面与 Agent 365：两个控制平面的关系</a></h3>
+            <p class="item-desc">官方解读 Foundry Control Plane 与 Agent 365 两个控制平面在企业中的分工与协作。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-07-01</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/agent-to-agent-communication-connecting-foundry-and-langgraph/ba-p/4531378" target="_blank" rel="noreferrer">Agent 间通信：通过 A2A 连接 Foundry 与 LangGraph agent</a></h3>
+            <p class="item-desc">官方演示如何用 Agent2Agent（A2A）让不同框架构建的 agent 相互发现与协作。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-30</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/claude-sonnet-5-is-now-generally-available-in-microsoft-foundry/ba-p/4530737" target="_blank" rel="noreferrer">Claude Sonnet 5 在 Microsoft Foundry 正式 GA</a></h3>
+            <p class="item-desc">继 6 月 29 日宣布 Claude 在 Foundry GA 后，官方说明 Claude Sonnet 5 为企业提供生产就绪的 Claude 模型构建路径。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-29</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://azure.microsoft.com/en-us/blog/claude-in-microsoft-foundry-is-now-generally-available/" target="_blank" rel="noreferrer">Claude 在 Microsoft Foundry 正式 GA</a></h3>
+            <p class="item-desc">Azure 官方博客宣布 Anthropic Claude 在 Microsoft Foundry 全面可用，扩展 Foundry 的前沿模型矩阵。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-29</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://www.microsoft.com/en-us/microsoft-cloud/blog/2026/06/29/the-2026-agent-confidence-index-where-300-builders-see-real-momentum/" target="_blank" rel="noreferrer">2026 Agent Confidence Index：300 位构建者看到的真实动能</a></h3>
+            <p class="item-desc">Microsoft Cloud 博客发布 2026 Agent Confidence Index，基于 300 位构建者的调研，呈现企业 agent 落地的真实进展与信心。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-26</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/evaluating-multi-turn-agents-a-quality-study-of-microsoft/ba-p/4524106" target="_blank" rel="noreferrer">评估多轮 agent：Foundry 多轮评估器的质量研究</a></h3>
+            <p class="item-desc">官方研究 Foundry 多轮评估器（multi-turn evaluators）的质量，探讨 LLM-as-judge 评估的可靠性。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-26</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/practice-the-hard-call-real-time-voice-training-with-live-voice/ba-p/4530723" target="_blank" rel="noreferrer">练习难打的电话：用 Live Voice Practice 做实时语音训练</a></h3>
+            <p class="item-desc">官方介绍 Live Voice Practice，用实时语音场景训练客服等难以练习的对话。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-24</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/introducing-cohere-command-a-in-foundry/ba-p/4530376" target="_blank" rel="noreferrer">Foundry 引入 Cohere Command A+</a></h3>
+            <p class="item-desc">官方宣布 Cohere Command A+ 登陆 Foundry，支持跨 48 种语言推理、处理含图表文档并编排多步骤工作流。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-24</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/an-operational-toolchain-for-microsoft-foundry-private-networks/ba-p/4529558" target="_blank" rel="noreferrer">Microsoft Foundry 私有网络的运维工具链</a></h3>
+            <p class="item-desc">官方介绍将 Foundry 部署到私有网络时的运维工具链，减少因周边运维环节导致的部署失败。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-23</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/mistral-document-ai-with-ocr-4-and-mistral-medium-3-5-arrive-in/ba-p/4529863" target="_blank" rel="noreferrer">Mistral Document AI（OCR 4）与 Mistral Medium 3.5 登陆 Foundry</a></h3>
+            <p class="item-desc">官方宣布 Mistral Document AI 与 Mistral Medium 3.5 进入 Foundry，面向文档摄取、推理、编码与自动化等不同能力需求。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-06-23</span>
+              <span class="item-source">官方博客</span>
+            </div>
+            <h3 class="item-title"><a href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/defending-your-memory-in-microsoft-foundry-agent-service-against/ba-p/4529638" target="_blank" rel="noreferrer">防御 Foundry Agent Service 的 Memory 免受记忆投毒</a></h3>
+            <p class="item-desc">官方讲述如何保护 Foundry Agent Service 的 Memory 免受 memory poisoning 攻击，兼顾记忆有用性与安全。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-01</span>
+              <span class="item-source">Microsoft Learn</span>
+            </div>
+            <h3 class="item-title"><a href="https://learn.microsoft.com/en-us/azure/foundry-classic/openai/whats-new" target="_blank" rel="noreferrer">Azure OpenAI 新增 GPT Realtime 2.0（预览）概念文档</a></h3>
+            <p class="item-desc">Azure OpenAI What&#39;s new（2026 年 5 月）：新增 GPT Realtime 2.0（预览）概念文档，覆盖推理支持、响应阶段（preamble 与最终答案）与更严格的指令遵循。</p>
+          </article>
+          <article class="item is-hidden">
+            <div class="item-top">
+              <span class="item-date">2026-05-01</span>
+              <span class="item-source">Microsoft Learn</span>
+            </div>
+            <h3 class="item-title"><a href="https://learn.microsoft.com/en-us/azure/foundry-classic/openai/whats-new" target="_blank" rel="noreferrer">GPT Realtime Translate 与 GPT Realtime Whisper 文档发布</a></h3>
+            <p class="item-desc">Azure OpenAI What&#39;s new（2026 年 5 月）：新增 GPT Realtime Translate（连续流式音频翻译，面向多语种直播/客服/语音助手）与 GPT Realtime Whisper（低延迟流式转写，面向实时字幕/监控/归档）概念文档。</p>
+          </article>
+      </div>
+      <div class="more-wrap"><button class="more-btn" type="button" data-target="azure-ai" data-total="40">查看全部 40 条 ▾</button></div>
+    </section>
+
+    <div class="block-title">数据来源与刷新</div>
+    <div class="sources">
+      <div class="sources-grid">
+
+        <div class="source-col">
+          <div class="source-col-title">Microsoft Learn</div>
+          <a class="source-link" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/release-notes" target="_blank" rel="noreferrer"><span>Microsoft 365 Copilot Release Notes</span><small>learn.microsoft.com</small></a><a class="source-link" href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management" target="_blank" rel="noreferrer"><span>Copilot Studio Billing &amp; Copilot Credits</span><small>learn.microsoft.com</small></a><a class="source-link" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/prerequisites?tabs=customers" target="_blank" rel="noreferrer"><span>Copilot Extensibility Prerequisites</span><small>learn.microsoft.com</small></a><a class="source-link" href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new" target="_blank" rel="noreferrer"><span>Copilot Studio What&#39;s new（Learn）</span><small>learn.microsoft.com</small></a><a class="source-link" href="https://learn.microsoft.com/en-us/azure/foundry-classic/openai/whats-new" target="_blank" rel="noreferrer"><span>Azure OpenAI / Foundry What&#39;s new</span><small>learn.microsoft.com</small></a>
+        </div>
+        <div class="source-col">
+          <div class="source-col-title">官方博客</div>
+          <a class="source-link" href="https://www.microsoft.com/en-us/microsoft-365/blog/feed/" target="_blank" rel="noreferrer"><span>Microsoft 365 Blog</span><small>www.microsoft.com</small></a><a class="source-link" href="https://techcommunity.microsoft.com/t5/s/gxcuf89792/rss/board?board.id=microsoft365copilotblog" target="_blank" rel="noreferrer"><span>Microsoft 365 Copilot Tech Community Blog</span><small>techcommunity.microsoft.com</small></a><a class="source-link" href="https://www.microsoft.com/en-us/power-platform/blog/feed/" target="_blank" rel="noreferrer"><span>Power Platform Blog</span><small>www.microsoft.com</small></a><a class="source-link" href="https://azure.microsoft.com/en-us/blog/feed/" target="_blank" rel="noreferrer"><span>Microsoft Azure Blog</span><small>azure.microsoft.com</small></a><a class="source-link" href="https://techcommunity.microsoft.com/t5/s/gxcuf89792/rss/board?board.id=copilot-studio-blog" target="_blank" rel="noreferrer"><span>Copilot Studio Blog（Tech Community）</span><small>techcommunity.microsoft.com</small></a><a class="source-link" href="https://techcommunity.microsoft.com/t5/s/gxcuf89792/rss/board?board.id=azure-ai-foundry-blog" target="_blank" rel="noreferrer"><span>Microsoft Foundry Blog（原 Azure AI Foundry）</span><small>techcommunity.microsoft.com</small></a>
+        </div>
+        <div class="source-col">
+          <div class="source-col-title">Roadmap</div>
+          <a class="source-link" href="https://www.microsoft.com/releasecommunications/api/v2/m365/rss" target="_blank" rel="noreferrer"><span>Microsoft 365 Roadmap</span><small>www.microsoft.com</small></a><a class="source-link" href="https://www.microsoft.com/releasecommunications/api/v2/azure/rss" target="_blank" rel="noreferrer"><span>Azure 服务更新（Azure AI Roadmap）</span><small>www.microsoft.com</small></a><a class="source-link" href="https://www.aka.ms/MCStoM365Roadmap" target="_blank" rel="noreferrer"><span>Copilot Studio Roadmap（M365 Roadmap 筛选）</span><small>www.aka.ms</small></a><a class="source-link" href="https://learn.microsoft.com/en-us/power-platform/release-plan/" target="_blank" rel="noreferrer"><span>Power Platform Roadmap（M365 Roadmap 中 Power Automate）</span><small>learn.microsoft.com</small></a>
+        </div>
+        <div class="source-col">
+          <div class="source-col-title">采用资源</div>
+          <a class="source-link" href="https://adoption.microsoft.com/en-us/copilot/" target="_blank" rel="noreferrer"><span>Copilot 采用中心（Adoption）</span><small>adoption.microsoft.com</small></a><a class="source-link" href="https://support.microsoft.com/copilot" target="_blank" rel="noreferrer"><span>Microsoft 365 Copilot 支持中心（Support）</span><small>support.microsoft.com</small></a>
+        </div>
+      </div>
+      <div class="footer-meta">
+        本站数据由自动化每日抓取上述官方公开来源并去重整理。最近刷新时间：2026-07-24 11:03:35（北京时间）。当前版本 V1.0，近 90 天累计 119 条更新。
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll(".more-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const grid = document.querySelector('[data-group="' + btn.dataset.target + '"]');
+        if (!grid) return;
+        const hidden = grid.querySelectorAll(".item.is-hidden");
+        if (hidden.length) {
+          hidden.forEach(el => el.classList.remove("is-hidden"));
+          btn.textContent = "收起 ▴";
+        } else {
+          const items = grid.querySelectorAll(".item");
+          items.forEach((el, i) => { if (i >= 6) el.classList.add("is-hidden"); });
+          btn.textContent = "查看全部 " + btn.dataset.total + " 条 ▾";
+          grid.closest("section").scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
