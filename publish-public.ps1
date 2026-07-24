@@ -33,8 +33,15 @@ $token = (gh auth token --user $personalUser).Trim()
 if (-not $token) { throw "Could not obtain personal GitHub token for $personalUser" }
 
 $pushUrl = "https://x-access-token:$token@github.com/$repoPath.git"
-git push $pushUrl main 2>&1 | ForEach-Object {
-  if ($_ -notmatch [regex]::Escape($token)) { $_ }
+# git writes progress to stderr; capture combined output and inspect exit code instead of treating stderr as fatal
+$prevEAP = $ErrorActionPreference
+$ErrorActionPreference = "Continue"
+$pushOutput = & git push $pushUrl main 2>&1
+$pushExit = $LASTEXITCODE
+$ErrorActionPreference = $prevEAP
+$pushOutput | ForEach-Object {
+  if ("$_" -notmatch [regex]::Escape($token)) { Write-Output "$_" }
 }
+if ($pushExit -ne 0) { throw "git push failed with exit code $pushExit" }
 
 Write-Output "PUBLIC_PUBLISHED"
