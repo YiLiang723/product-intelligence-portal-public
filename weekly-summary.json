@@ -1,33 +1,32 @@
 {
-  "generatedAt": "2026-07-24T11:03:35+08:00",
-  "intro": "本周 Microsoft 三大产品线共同指向一个主题：从『能用 Copilot』走向『可规模化、可治理、可生产的企业级 Agent 平台』。以下按产品线拆解本周重点。",
+  "generatedAt": "2026-07-26T11:17:16+08:00",
+  "intro": "本周产品更新继续围绕『企业级 Copilot 体验整合、Agent 扩展治理、数据安全基线』展开。M365 Copilot 的 Roadmap 更新最密集，重点是搜索与聊天融合、连接器体验、移动端捕获、Viva/SharePoint 采用场景，以及 Purview 数据保护。",
   "sections": [
     {
       "emoji": "🧩",
       "title": "M365 Copilot",
       "points": [
-        "🏢 企业级落地实战：官方分享百万文档、10 万+ 月活、300+ agent 的 Copilot 连接器建设经验，是本周最具参考价值的规模化案例。",
-        "📊 grounding 更强：M365 Copilot 将集成 Power BI（GA 8 月），可直接基于报表与语义模型作答；同时新增 Web grounding 域排除，让回答更贴合组织可信来源。",
-        "🤖 Agent 生态打通：声明式 Agent（含 Actions）登陆 GCC High 与 DoD 主权云；Agent 365 agents 可在 Copilot Chat 与声明式 Agent 中调用，并新增管理者分析仪表盘。",
-        "📱 移动与笔记场景扩展：Copilot Notebooks 多模态捕获、OneNote 移动版摘要问答陆续 GA，Copilot 正从桌面走向移动端全场景。"
+        "🔎 搜索即对话：Copilot Search 将内嵌 Copilot Chat，Microsoft 365 Chat 与搜索体验进一步融合，用户可从『找到信息』直接进入追问、总结和执行。",
+        "🔌 扩展更可治理：ServiceNow Connector 支持管理员编辑用户映射与查询过滤器，连接器搜索结果将展示更丰富实体，内容源过滤器也改善来源发现。",
+        "🔐 数据安全补强：Purview DLP 为 SharePoint/OneDrive 增加文件隔离动作，Information Protection 支持对静态 SharePoint 库数据应用默认标签，是 Copilot 就绪度治理的重要信号。",
+        "📱 场景继续外延：Outlook 经典版新增 Copilot 入口，移动端 Copilot 支持语音笔记，Excel GCC 获得 Edit with Copilot，覆盖更多终端和云环境。",
+        "🏢 Viva 与 SharePoint 采用联动：Viva Engage 社区 Agents、SharePoint 新闻交叉发布到 Engage、Viva Campaigns 原生进入 SharePoint，让 Copilot 推广更贴近员工社区和内部传播。"
       ]
     },
     {
       "emoji": "🛠️",
       "title": "Copilot Studio",
       "points": [
-        "👨‍💻 面向开发者提速：Dataverse 插件上架 Cursor Marketplace，Power Pages 支持原生 Dataverse 授权，开发者链路进一步打通。",
-        "🔗 数据与分析融合：Link to Fabric UX 刷新、SharePoint 列表可作为知识源，Dataverse 正被打造成『Agent 数据平台』。",
-        "🔒 治理与安全加码：多项 roadmap 聚焦 agent 安全——禁止 AI agent 使用 maker 凭据、检测凭据过度共享并强制安全共享，规模化前先立治理。",
-        "⚙️ 工作流即 Agent：agent 节点可作为工作流步骤调用、flow 支持 express 模式提速，自主 Agent 支持只读方式共享给终端用户，扩大触达范围。"
+        "🧭 本次 Copilot Studio / Power Platform 官方源无新增条目；建议继续关注 agent 构建、连接器、Dataverse 与治理更新。",
+        "🔗 与 M365 Copilot 连接器路线图联动增强，ServiceNow 与内容源过滤能力对企业 agent 知识接入同样有参考价值。"
       ]
     },
     {
       "emoji": "☁️",
       "title": "Azure AI（Microsoft Foundry）",
       "points": [
-        "🚀 模型密集发布：一次性推出 MAI-Image-2.5 Pro 与 MAI-Voice-2 Flash，并支持实时多语种转写，Post-Stream Refinement 正式 GA。",
-        "🧠 agent grounding 与生产实践：给出用 Azure AI Search + Foundry IQ 为 Copilot Studio agent 做 grounding 的方案，以及 Standard Agents BYOVNet 的生产网络最佳实践。"
+        "📭 本次 Azure AI / Microsoft Foundry 官方源无新增条目；模型、Foundry 平台能力与 Azure AI 服务更新保持观察。",
+        "🔐 本周更明显的趋势发生在 M365 数据治理侧：Purview、SharePoint 与连接器能力正在为企业级 AI grounding 建立更稳的安全边界。"
       ]
     }
   ]
