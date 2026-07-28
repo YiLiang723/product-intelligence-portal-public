@@ -1,33 +1,33 @@
 {
-  "generatedAt": "2026-07-27T11:09:21+08:00",
-  "intro": "本次增量显示 Microsoft AI 产品更新继续沿着『Copilot 体验融合、Agent 扩展与治理、企业数据安全』推进。M365 Copilot 仍是最活跃板块；Copilot Studio 需结合 Power Platform 与连接器治理一起观察；Azure AI / Foundry 继续作为模型与企业级 AI 平台底座。",
+  "generatedAt": "2026-07-28T11:05:37+08:00",
+  "intro": "本次增量继续沿着 Microsoft AI『Copilot 体验融合、Agent 扩展与治理、企业数据安全』三条主线推进。M365 Copilot 仍是路线图最密集的板块；Copilot Studio 需要与 Power Platform、连接器与治理一起观察；Azure AI / Foundry 作为模型与企业级 AI 平台底座对上层应用形成支撑。",
   "sections": [
     {
       "emoji": "🧩",
       "title": "M365 Copilot",
       "points": [
-        "📌 本次 M365 Copilot 新增 0 条，重点关注 Copilot Search/Chat 融合、Outlook/Excel/移动端入口、Viva/SharePoint 采用链路与 Purview 数据保护。",
-        "🔎 搜索、聊天、连接器结果和内容源过滤正在收敛，说明 Copilot grounding 从『能连数据』走向『能解释来源、能治理范围』。",
-        "🔐 Purview DLP、默认标签和 SharePoint/OneDrive 控制继续强化 Copilot 就绪度，客户方案应把权限、标签、DLP 和连接器配置放在同一治理叙事中。",
-        "🏢 Viva Engage Agents、SharePoint 新闻分发和 Viva Campaigns 说明采用推广正在产品内闭环，适合做员工社区、知识运营和变革管理 demo。"
+        "📌 本次 M365 Copilot 新增 0 条，可用于跟踪 Copilot 搜索、聊天、Outlook/Excel/移动端入口，以及 Viva / SharePoint 采用链路的最新演进。",
+        "🔎 Copilot Search 与 Copilot Chat 的融合、连接器结果的丰富展示、内容源过滤器等能力，都在推动 grounding 从『能连数据』走向『能解释和治理』。",
+        "🔐 Purview DLP、默认标签、自动标记提升等更新继续强化 Copilot 就绪度，建议把权限、标签、DLP、连接器等作为一体化叙事讲给客户。",
+        "🏢 Viva Engage Agents、SharePoint 新闻分发、Viva Campaigns 等表明采用推广已经在产品内部形成闭环，可用于员工社区、知识运营和变革管理场景。"
       ]
     },
     {
       "emoji": "🛠️",
       "title": "Copilot Studio",
       "points": [
-        "📌 本次 Copilot Studio / Power Platform 新增 0 条；若为 0，表示官方源暂无新的可入库条目，但仍应关注 M365 连接器与 Agent 治理更新对 Studio 方案的外溢影响。",
-        "🔗 ServiceNow Connector 用户映射、查询过滤器、内容源过滤和连接器结果展示能力，会直接影响 Copilot Studio/自定义 agent 的企业知识接入质量。",
-        "🧭 面向客户时建议把 Copilot Studio 讲成『业务 agent 编排层』，同时用 Purview、连接器与 Power Platform 环境治理补齐生产级边界。"
+        "📌 本次 Copilot Studio / Power Platform 新增 1 条；若为 0，说明官方源暂无新条目，但需持续关注 Power Platform、Dataverse、连接器与 Agent 治理的动态。",
+        "🔗 ServiceNow Connector 用户映射、查询过滤与内容源过滤等能力，会直接影响 Copilot Studio 与自定义 agent 的企业知识接入质量。",
+        "🧭 面向客户时建议将 Copilot Studio 定位为『业务 agent 编排层』，用 Purview、连接器、环境隔离与 DLP 建立生产级安全边界。"
       ]
     },
     {
       "emoji": "☁️",
       "title": "Azure AI（Microsoft Foundry）",
       "points": [
-        "📌 本次 Azure AI / Microsoft Foundry 新增 1 条：AT&T 与 Microsoft 使用 Microsoft Foundry、开放 AI 模型和 AMD/NVIDIA GPU 基础设施扩展约万亿 token 工作负载。",
-        "🧠 Azure AI 仍应作为模型、评估、检索增强、托管算力、网络隔离和生产部署底座，与 M365 Copilot / Copilot Studio 的应用层更新配套讲解。",
-        "🔐 本轮更明显的趋势在 M365 数据治理侧，但这些治理能力会反向影响 Azure AI grounding、企业搜索和 agent 数据边界设计。"
+        "📌 本次 Azure AI / Microsoft Foundry 新增 4 条；若为 0，说明本轮官方源暂无新的 AI 相关条目，但 Foundry 作为底座仍需持续关注。",
+        "🧠 Azure AI 应作为模型、评估、检索增强、托管算力、网络隔离与生产部署的底座，与 M365 Copilot / Copilot Studio 的应用层更新配套讲解。",
+        "🔐 数据治理侧的更新（Purview、SharePoint、连接器）会反向影响 Azure AI grounding、企业搜索和 agent 数据边界设计。"
       ]
     }
   ]
