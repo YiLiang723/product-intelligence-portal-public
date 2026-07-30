@@ -1,33 +1,53 @@
 {
   "generatedAt": "2026-07-30T12:17:10+08:00",
   "intro": "本次增量继续沿着 Microsoft AI『Copilot 体验融合、Agent 扩展与治理、企业数据安全』三条主线推进。M365 Copilot 仍是路线图最密集板块；Copilot Studio 需要与 Power Platform、连接器和治理一起观察；Azure AI / Foundry 继续作为模型与企业级 AI 平台底座支撑上层应用。",
+  "intro_en": "This update continues along Microsoft AI's three main threads: unifying the Copilot experience, expanding and governing agents, and enterprise data security. M365 Copilot remains the densest area of the roadmap; Copilot Studio should be tracked together with Power Platform, connectors and governance; Azure AI / Foundry keeps serving as the model and enterprise-grade AI platform foundation beneath the application layer.",
   "sections": [
     {
       "emoji": "🧩",
       "title": "M365 Copilot",
+      "title_en": "M365 Copilot",
       "points": [
         "📌 本次 M365 Copilot 新增 9 条，可用于跟踪 Copilot 搜索、聊天、Outlook/Excel/移动端入口，以及 Viva / SharePoint 采用链路的最新演进。",
         "🔎 Copilot Search 与 Copilot Chat 的融合、连接器结果的丰富展示、内容源过滤器等能力，正在推动 grounding 从『能连数据』走向『能解释和治理』。",
         "🔐 Purview DLP、默认标签、自动标记提升等更新继续强化 Copilot 就绪度，建议把权限、标签、DLP、连接器作为一体化叙事讲给客户。",
         "🏢 Viva Engage Agents、SharePoint 新闻分发、Viva Campaigns 等能力表明采用推广已经在产品内部形成闭环，可用于员工社区、知识运营与变革管理场景。"
+      ],
+      "points_en": [
+        "📌 9 new M365 Copilot items this cycle — useful for tracking Copilot Search, Chat, the Outlook/Excel/mobile entry points, and the latest evolution of the Viva / SharePoint adoption path.",
+        "🔎 The convergence of Copilot Search and Copilot Chat, richer connector-result rendering, and content-source filters are pushing grounding from 'can connect to data' toward 'can explain and govern it'.",
+        "🔐 Updates such as Purview DLP, default labels and auto-labeling improvements keep strengthening Copilot readiness — pitch permissions, labels, DLP and connectors to customers as one integrated story.",
+        "🏢 Viva Engage Agents, SharePoint news distribution and Viva Campaigns show that adoption enablement is now a closed loop inside the product, ready for employee-community, knowledge-operations and change-management scenarios."
       ]
     },
     {
       "emoji": "🛠️",
       "title": "Copilot Studio",
+      "title_en": "Copilot Studio",
       "points": [
         "📌 本次 Copilot Studio / Power Platform 新增 0 条；若为 0，说明官方源暂无新条目，但需持续关注 Power Platform、Dataverse、连接器与 Agent 治理动态。",
         "🔗 ServiceNow Connector 用户映射、查询过滤、内容源过滤等能力会直接影响 Copilot Studio 与自定义 agent 的企业知识接入质量。",
         "🧭 面向客户时可以把 Copilot Studio 定位为『业务 agent 编排层』，用 Purview、连接器、环境隔离与 DLP 建立生产级安全边界。"
+      ],
+      "points_en": [
+        "📌 0 new Copilot Studio / Power Platform items this cycle; when it's 0 the official sources simply had no new entries, but keep watching Power Platform, Dataverse, connectors and agent governance.",
+        "🔗 Capabilities like ServiceNow Connector user mapping, query filtering and content-source filters directly affect how well Copilot Studio and custom agents ingest enterprise knowledge.",
+        "🧭 For customers, position Copilot Studio as the 'business-agent orchestration layer', using Purview, connectors, environment isolation and DLP to establish a production-grade security boundary."
       ]
     },
     {
       "emoji": "☁️",
       "title": "Azure AI（Microsoft Foundry）",
+      "title_en": "Azure AI (Microsoft Foundry)",
       "points": [
         "📌 本次 Azure AI / Microsoft Foundry 新增 2 条；若为 0，说明本轮官方源暂无新的 AI 相关条目，但 Foundry 作为底座仍需持续关注。",
         "🧠 Azure AI 应作为模型、评估、检索增强、托管算力、网络隔离与生产部署的底座，与 M365 Copilot / Copilot Studio 的应用层更新配套讲解。",
         "🔐 数据治理侧的更新（Purview、SharePoint、连接器）会反向影响 Azure AI grounding、企业搜索和 agent 数据边界设计。"
+      ],
+      "points_en": [
+        "📌 2 new Azure AI / Microsoft Foundry items this cycle; when it's 0 there were simply no new AI-related entries this round, but Foundry as the foundation still warrants ongoing attention.",
+        "🧠 Treat Azure AI as the foundation for models, evaluation, retrieval augmentation, managed compute, network isolation and production deployment — present it alongside the M365 Copilot / Copilot Studio application-layer updates.",
+        "🔐 Data-governance updates (Purview, SharePoint, connectors) feed back into Azure AI grounding, enterprise search and agent data-boundary design."
       ]
     }
   ]

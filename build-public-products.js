@@ -46,6 +46,13 @@ function sortRecords(records) {
   return records.slice().sort((a, b) => `${b.date}|${b.updatedAt || ""}`.localeCompare(`${a.date}|${a.updatedAt || ""}`));
 }
 
+// Bilingual helper: emit both zh and en variants; CSS shows only the active one.
+// zh/en are already-safe HTML fragments. tag/attrs let callers reuse element styling.
+function bi(zh, en, tag = "span", attrs = "") {
+  const a = attrs ? " " + attrs : "";
+  return `<${tag} data-l="zh"${a}>${zh}</${tag}><${tag} data-l="en"${a}>${en}</${tag}>`;
+}
+
 function toPublicData(kb) {
   const sources = (kb.officialSources || []).filter(s => s.type !== "Message Center" && s.url);
   return {
@@ -80,8 +87,8 @@ function renderFeatureCard(group) {
     return `
         <article class="feature-card">
           <span class="chip">${escapeHtml(group.label)}</span>
-          <h3>暂无公开更新</h3>
-          <p class="feature-desc">当前没有可展示的新增内容。</p>
+          ${bi("暂无公开更新", "No public updates yet", "h3")}
+          ${bi("当前没有可展示的新增内容。", "There are no new items to show right now.", "p", 'class="feature-desc"')}
         </article>`;
   }
   const url = urlOf(item);
@@ -94,8 +101,8 @@ function renderFeatureCard(group) {
           <h3>${escapeHtml(item.title)}</h3>
           <p class="feature-desc">${clip(item.summary, 130)}</p>
           <div class="feature-actions">
-            <a class="btn primary" href="#${escapeHtml(group.id)}">查看该分区</a>
-            ${url ? `<a class="btn ghost" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">打开原文</a>` : ""}
+            <a class="btn primary" href="#${escapeHtml(group.id)}">${bi("查看该分区", "View section")}</a>
+            ${url ? `<a class="btn ghost" href="${escapeHtml(url)}" target="_blank" rel="noreferrer">${bi("打开原文", "Open source")}</a>` : ""}
           </div>
         </article>`;
 }
@@ -120,22 +127,22 @@ function renderGroupSection(group) {
   const total = group.records.length;
   const items = group.records.map((item, i) => renderItem(item, i >= INITIAL_VISIBLE)).join("");
   const moreBtn = total > INITIAL_VISIBLE
-    ? `<div class="more-wrap"><button class="more-btn" type="button" data-target="${escapeHtml(group.id)}" data-total="${total}">查看全部 ${total} 条 ▾</button></div>`
+    ? `<div class="more-wrap"><button class="more-btn" type="button" data-target="${escapeHtml(group.id)}" data-total="${total}"></button></div>`
     : "";
   return `
     <section class="section" id="${escapeHtml(group.id)}">
       <div class="section-head">
         <h2>${escapeHtml(group.label)}</h2>
-        <span class="section-count">近 ${BASELINE_DAYS} 天累计 ${total} 条</span>
+        <span class="section-count">${bi(`近 ${BASELINE_DAYS} 天累计 ${total} 条`, `${total} in last ${BASELINE_DAYS} days`)}</span>
       </div>
       <div class="item-grid" data-group="${escapeHtml(group.id)}">
-${items || '<div class="empty">当前暂无公开更新</div>'}
+${items || `<div class="empty">${bi("当前暂无公开更新", "No public updates yet")}</div>`}
       </div>
       ${moreBtn}
     </section>`;
 }
 
-function renderSourceGroup(label, list) {
+function renderSourceGroup(labelHtml, list) {
   if (!list.length) return "";
   const links = list.map(s => {
     let host = "";
@@ -144,7 +151,7 @@ function renderSourceGroup(label, list) {
   }).join("");
   return `
         <div class="source-col">
-          <div class="source-col-title">${escapeHtml(label)}</div>
+          <div class="source-col-title">${labelHtml}</div>
           ${links}
         </div>`;
 }
@@ -161,25 +168,31 @@ function buildHtml(data, summary) {
     ? `
     <article class="summary-card">
       <div class="summary-head">
-        <span class="chip">AI 本周趋势</span>
-        <span class="feature-date">截至 ${refreshText}</span>
+        <span class="chip">${bi("AI 本周趋势", "AI Weekly Trends")}</span>
+        <span class="feature-date">${bi(`截至 ${refreshText}`, `As of ${refreshText}`)}</span>
       </div>
-      ${summary.intro ? `<p class="summary-intro">${escapeHtml(summary.intro)}</p>` : ""}
-      ${summary.text ? `<p class="summary-intro">${escapeHtml(summary.text)}</p>` : ""}
-      ${(summary.sections || []).map(sec => `
+      ${summary.intro ? bi(escapeHtml(summary.intro), escapeHtml(summary.intro_en || summary.intro), "p", 'class="summary-intro"') : ""}
+      ${summary.text ? bi(escapeHtml(summary.text), escapeHtml(summary.text_en || summary.text), "p", 'class="summary-intro"') : ""}
+      ${(summary.sections || []).map(sec => {
+        const titleZh = `${escapeHtml(sec.emoji || "")} ${escapeHtml(sec.title || "")}`;
+        const titleEn = `${escapeHtml(sec.emoji || "")} ${escapeHtml(sec.title_en || sec.title || "")}`;
+        const ptsZh = (sec.points || []).map(p => `<li>${escapeHtml(p)}</li>`).join("");
+        const enPts = (sec.points_en && sec.points_en.length) ? sec.points_en : (sec.points || []);
+        const ptsEn = enPts.map(p => `<li>${escapeHtml(p)}</li>`).join("");
+        return `
       <div class="summary-section">
-        <div class="summary-section-title">${escapeHtml(sec.emoji || "")} ${escapeHtml(sec.title || "")}</div>
-        <ul class="summary-points">
-          ${(sec.points || []).map(p => `<li>${escapeHtml(p)}</li>`).join("")}
-        </ul>
-      </div>`).join("")}
+        ${bi(titleZh, titleEn, "div", 'class="summary-section-title"')}
+        <ul class="summary-points" data-l="zh">${ptsZh}</ul>
+        <ul class="summary-points" data-l="en">${ptsEn}</ul>
+      </div>`;
+      }).join("")}
     </article>`
     : "";
   const sourcesHtml = [
-    renderSourceGroup("Microsoft Learn", data.sources.learn),
-    renderSourceGroup("官方博客", data.sources.blog),
-    renderSourceGroup("Roadmap", data.sources.roadmap),
-    renderSourceGroup("采用资源", data.sources.adoption)
+    renderSourceGroup(bi("Microsoft Learn", "Microsoft Learn"), data.sources.learn),
+    renderSourceGroup(bi("官方博客", "Official Blogs"), data.sources.blog),
+    renderSourceGroup(bi("Roadmap", "Roadmap"), data.sources.roadmap),
+    renderSourceGroup(bi("采用资源", "Adoption Resources"), data.sources.adoption)
   ].join("");
 
   return `<!doctype html>
@@ -187,7 +200,7 @@ function buildHtml(data, summary) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Microsoft 产品更新公开版</title>
+  <title>Microsoft 产品更新公开版 · Product Updates</title>
   <script>
     (() => {
       const param = new URLSearchParams(window.location.search).get("scoutTheme");
@@ -195,8 +208,20 @@ function buildHtml(data, summary) {
         param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       document.documentElement.setAttribute("data-theme", theme);
     })();
+    (() => {
+      const url = new URLSearchParams(window.location.search);
+      const q = url.get("lang") || url.get("scoutLang");
+      let stored = null;
+      try { stored = localStorage.getItem("scoutLang"); } catch (e) {}
+      const lang = (q === "en" || q === "zh") ? q : ((stored === "en" || stored === "zh") ? stored : "zh");
+      document.documentElement.setAttribute("data-lang", lang);
+      document.documentElement.setAttribute("lang", lang === "en" ? "en" : "zh-CN");
+    })();
   </script>
   <style>
+    /* Bilingual visibility — only the active language renders */
+    html[data-lang="en"] [data-l="zh"] { display: none !important; }
+    html:not([data-lang="en"]) [data-l="en"] { display: none !important; }
     :root {
       color-scheme: light;
       --cp-bg: #f7f4ef;
@@ -246,7 +271,7 @@ function buildHtml(data, summary) {
     .shell { max-width: 1160px; margin: 0 auto; padding: 40px 24px 64px; }
 
     /* Hero */
-    .hero { margin-bottom: 4px; }
+    .hero { margin-bottom: 4px; position: relative; padding-right: 132px; }
     .eyebrow { margin: 0 0 10px; color: var(--cp-accent); font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
     h1 { margin: 0; font-size: clamp(30px, 4.4vw, 46px); line-height: 1.1; letter-spacing: -0.03em; }
     .hero-desc { margin: 16px 0 0; color: var(--cp-text-muted); max-width: 100%; font-size: 16px; }
@@ -306,6 +331,31 @@ function buildHtml(data, summary) {
     }
     .nav-pill:hover { border-color: var(--cp-accent); }
     .nav-legend { margin-left: auto; color: var(--cp-text-soft); font-size: 12px; }
+    .lang-toggle {
+      position: absolute;
+      top: 2px;
+      right: 0;
+      display: inline-flex;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 999px;
+      overflow: hidden;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-card-shadow);
+      z-index: 30;
+    }
+    .lang-btn {
+      padding: 7px 15px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--cp-surface);
+      color: var(--cp-text-muted);
+      border: none;
+      cursor: pointer;
+      line-height: 1.4;
+    }
+    .lang-btn + .lang-btn { border-left: 1px solid var(--cp-border-strong); }
+    .lang-btn.active { background: var(--cp-accent); color: var(--cp-accent-fg); }
+    .lang-btn:not(.active):hover { color: var(--cp-accent); }
 
     /* Section headers */
     .block-title {
@@ -474,6 +524,7 @@ function buildHtml(data, summary) {
       .item-grid { grid-template-columns: 1fr; }
       .sources-grid { grid-template-columns: 1fr 1fr; }
       .nav-legend { margin-left: 0; width: 100%; }
+      .hero { padding-right: 108px; }
     }
     @media (max-width: 560px) {
       .sources-grid { grid-template-columns: 1fr; }
@@ -483,43 +534,100 @@ function buildHtml(data, summary) {
 <body>
   <div class="shell">
     <header class="hero" id="top">
-      <p class="eyebrow">Public product updates</p>
-      <h1>Microsoft 产品更新公开版</h1>
-      <p class="hero-desc">聚合 Microsoft 官方产品更新（M365 Copilot、Copilot Studio、Azure AI），仅保留适合公开分享的内容，数据每日自动更新。</p>
+      <span class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" class="lang-btn" data-lang="zh">中文</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+      </span>
+      <p class="eyebrow">${bi("公开产品更新", "Public product updates")}</p>
+      ${bi("Microsoft 产品更新公开版", "Microsoft Product Updates · Public Edition", "h1")}
+      ${bi(
+        "聚合 Microsoft 官方产品更新（M365 Copilot、Copilot Studio、Azure AI），仅保留适合公开分享的内容，数据每日自动更新。",
+        "Aggregated official Microsoft product updates (M365 Copilot, Copilot Studio, Azure AI). Only publicly shareable content is kept, refreshed automatically every day.",
+        "p", 'class="hero-desc"'
+      )}
       <div class="hero-meta">
-        <span class="meta-tag accent">最新更新 ${refreshText}</span>
-        <span class="meta-tag">版本 V${escapeHtml(data.version)}</span>
-        <span class="meta-tag">近 ${BASELINE_DAYS} 天累计 ${total} 条</span>
+        ${bi(`最新更新 ${refreshText}`, `Last updated ${refreshText}`, "span", 'class="meta-tag accent"')}
+        ${bi(`版本 V${escapeHtml(data.version)}`, `Version V${escapeHtml(data.version)}`, "span", 'class="meta-tag"')}
+        ${bi(`近 ${BASELINE_DAYS} 天累计 ${total} 条`, `${total} updates · last ${BASELINE_DAYS} days`, "span", 'class="meta-tag"')}
       </div>
     </header>
 
     <nav class="anchor-nav">
-      <a class="nav-pill" href="#top"><span>概览</span><b>${total}</b></a>
+      <a class="nav-pill" href="#top"><span>${bi("概览", "Overview")}</span><b>${total}</b></a>
       ${navPills}
-      <span class="nav-legend">数字 = 近 ${BASELINE_DAYS} 天累计更新条数</span>
+      ${bi(`数字 = 近 ${BASELINE_DAYS} 天累计更新条数`, `Number = updates in the last ${BASELINE_DAYS} days`, "span", 'class="nav-legend"')}
     </nav>
 
-    <div class="block-title">本周重点</div>
+    ${bi("本周重点", "This Week's Highlights", "div", 'class="block-title"')}
 ${summaryBlock}
     <div class="feature-grid">
 ${features}
     </div>
 
-    <div class="block-title">按产品浏览</div>
+    ${bi("按产品浏览", "Browse by Product", "div", 'class="block-title"')}
 ${sections}
 
-    <div class="block-title">数据来源与刷新</div>
+    ${bi("数据来源与刷新", "Sources & Refresh", "div", 'class="block-title"')}
     <div class="sources">
       <div class="sources-grid">
 ${sourcesHtml}
       </div>
       <div class="footer-meta">
-        本站数据由自动化每日抓取上述官方公开来源并去重整理。最近刷新时间：${refreshText}（北京时间）。当前版本 V${escapeHtml(data.version)}，近 ${BASELINE_DAYS} 天累计 ${total} 条更新。
+        ${bi(
+          `本站数据由自动化每日抓取上述官方公开来源并去重整理。最近刷新时间：${refreshText}（北京时间）。当前版本 V${escapeHtml(data.version)}，近 ${BASELINE_DAYS} 天累计 ${total} 条更新。`,
+          `Data is aggregated and de-duplicated daily from the official public sources above. Last refreshed: ${refreshText} (Beijing time). Version V${escapeHtml(data.version)}, ${total} updates in the last ${BASELINE_DAYS} days.`,
+          "span"
+        )}
       </div>
     </div>
   </div>
 
   <script>
+    const INITIAL_VISIBLE = ${INITIAL_VISIBLE};
+    const MORE_LABELS = {
+      showAll: { zh: n => "查看全部 " + n + " 条 ▾", en: n => "Show all " + n + " ▾" },
+      collapse: { zh: "收起 ▴", en: "Collapse ▴" }
+    };
+
+    function currentLang() {
+      return document.documentElement.getAttribute("data-lang") === "en" ? "en" : "zh";
+    }
+
+    function updateMoreButtons() {
+      const lang = currentLang();
+      document.querySelectorAll(".more-btn").forEach(btn => {
+        const grid = document.querySelector('[data-group="' + btn.dataset.target + '"]');
+        if (!grid) return;
+        const collapsed = grid.querySelector(".item.is-hidden") !== null;
+        btn.textContent = collapsed
+          ? MORE_LABELS.showAll[lang](btn.dataset.total)
+          : MORE_LABELS.collapse[lang];
+      });
+    }
+
+    function setLang(lang) {
+      lang = lang === "en" ? "en" : "zh";
+      document.documentElement.setAttribute("data-lang", lang);
+      document.documentElement.setAttribute("lang", lang === "en" ? "en" : "zh-CN");
+      try { localStorage.setItem("scoutLang", lang); } catch (e) {}
+      document.querySelectorAll(".lang-btn").forEach(b =>
+        b.classList.toggle("active", b.dataset.lang === lang)
+      );
+      updateMoreButtons();
+    }
+
+    document.querySelectorAll(".lang-btn").forEach(b =>
+      b.addEventListener("click", () => setLang(b.dataset.lang))
+    );
+
+    // Allow the host page (e.g. ABS Hub) to sync the iframe language live.
+    window.addEventListener("message", e => {
+      const d = e.data;
+      if (d && (d.type === "setLang" || d.type === "scout:setLang") && (d.lang === "en" || d.lang === "zh")) {
+        setLang(d.lang);
+      }
+    });
+
     document.querySelectorAll(".more-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const grid = document.querySelector('[data-group="' + btn.dataset.target + '"]');
@@ -527,15 +635,17 @@ ${sourcesHtml}
         const hidden = grid.querySelectorAll(".item.is-hidden");
         if (hidden.length) {
           hidden.forEach(el => el.classList.remove("is-hidden"));
-          btn.textContent = "收起 ▴";
         } else {
           const items = grid.querySelectorAll(".item");
-          items.forEach((el, i) => { if (i >= ${INITIAL_VISIBLE}) el.classList.add("is-hidden"); });
-          btn.textContent = "查看全部 " + btn.dataset.total + " 条 ▾";
+          items.forEach((el, i) => { if (i >= INITIAL_VISIBLE) el.classList.add("is-hidden"); });
           grid.closest("section").scrollIntoView({ behavior: "smooth", block: "start" });
         }
+        updateMoreButtons();
       });
     });
+
+    // Sync toggle + button labels with the language chosen in <head>.
+    setLang(currentLang());
   </script>
 </body>
 </html>`;

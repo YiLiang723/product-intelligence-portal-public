@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Microsoft 产品更新公开版</title>
+  <title>Microsoft 产品更新公开版 · Product Updates</title>
   <script>
     (() => {
       const param = new URLSearchParams(window.location.search).get("scoutTheme");
@@ -11,8 +11,20 @@
         param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
       document.documentElement.setAttribute("data-theme", theme);
     })();
+    (() => {
+      const url = new URLSearchParams(window.location.search);
+      const q = url.get("lang") || url.get("scoutLang");
+      let stored = null;
+      try { stored = localStorage.getItem("scoutLang"); } catch (e) {}
+      const lang = (q === "en" || q === "zh") ? q : ((stored === "en" || stored === "zh") ? stored : "zh");
+      document.documentElement.setAttribute("data-lang", lang);
+      document.documentElement.setAttribute("lang", lang === "en" ? "en" : "zh-CN");
+    })();
   </script>
   <style>
+    /* Bilingual visibility — only the active language renders */
+    html[data-lang="en"] [data-l="zh"] { display: none !important; }
+    html:not([data-lang="en"]) [data-l="en"] { display: none !important; }
     :root {
       color-scheme: light;
       --cp-bg: #f7f4ef;
@@ -62,7 +74,7 @@
     .shell { max-width: 1160px; margin: 0 auto; padding: 40px 24px 64px; }
 
     /* Hero */
-    .hero { margin-bottom: 4px; }
+    .hero { margin-bottom: 4px; position: relative; padding-right: 132px; }
     .eyebrow { margin: 0 0 10px; color: var(--cp-accent); font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
     h1 { margin: 0; font-size: clamp(30px, 4.4vw, 46px); line-height: 1.1; letter-spacing: -0.03em; }
     .hero-desc { margin: 16px 0 0; color: var(--cp-text-muted); max-width: 100%; font-size: 16px; }
@@ -122,6 +134,31 @@
     }
     .nav-pill:hover { border-color: var(--cp-accent); }
     .nav-legend { margin-left: auto; color: var(--cp-text-soft); font-size: 12px; }
+    .lang-toggle {
+      position: absolute;
+      top: 2px;
+      right: 0;
+      display: inline-flex;
+      border: 1px solid var(--cp-border-strong);
+      border-radius: 999px;
+      overflow: hidden;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-card-shadow);
+      z-index: 30;
+    }
+    .lang-btn {
+      padding: 7px 15px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--cp-surface);
+      color: var(--cp-text-muted);
+      border: none;
+      cursor: pointer;
+      line-height: 1.4;
+    }
+    .lang-btn + .lang-btn { border-left: 1px solid var(--cp-border-strong); }
+    .lang-btn.active { background: var(--cp-accent); color: var(--cp-accent-fg); }
+    .lang-btn:not(.active):hover { color: var(--cp-accent); }
 
     /* Section headers */
     .block-title {
@@ -290,6 +327,7 @@
       .item-grid { grid-template-columns: 1fr; }
       .sources-grid { grid-template-columns: 1fr 1fr; }
       .nav-legend { margin-left: 0; width: 100%; }
+      .hero { padding-right: 108px; }
     }
     @media (max-width: 560px) {
       .sources-grid { grid-template-columns: 1fr; }
@@ -299,49 +337,50 @@
 <body>
   <div class="shell">
     <header class="hero" id="top">
-      <p class="eyebrow">Public product updates</p>
-      <h1>Microsoft 产品更新公开版</h1>
-      <p class="hero-desc">聚合 Microsoft 官方产品更新（M365 Copilot、Copilot Studio、Azure AI），仅保留适合公开分享的内容，数据每日自动更新。</p>
+      <span class="lang-toggle" role="group" aria-label="Language">
+        <button type="button" class="lang-btn" data-lang="zh">中文</button>
+        <button type="button" class="lang-btn" data-lang="en">EN</button>
+      </span>
+      <p class="eyebrow"><span data-l="zh">公开产品更新</span><span data-l="en">Public product updates</span></p>
+      <h1 data-l="zh">Microsoft 产品更新公开版</h1><h1 data-l="en">Microsoft Product Updates · Public Edition</h1>
+      <p data-l="zh" class="hero-desc">聚合 Microsoft 官方产品更新（M365 Copilot、Copilot Studio、Azure AI），仅保留适合公开分享的内容，数据每日自动更新。</p><p data-l="en" class="hero-desc">Aggregated official Microsoft product updates (M365 Copilot, Copilot Studio, Azure AI). Only publicly shareable content is kept, refreshed automatically every day.</p>
       <div class="hero-meta">
-        <span class="meta-tag accent">最新更新 2026-07-30 12:17:10</span>
-        <span class="meta-tag">版本 V1.0</span>
-        <span class="meta-tag">近 90 天累计 180 条</span>
+        <span data-l="zh" class="meta-tag accent">最新更新 2026-07-30 12:17:10</span><span data-l="en" class="meta-tag accent">Last updated 2026-07-30 12:17:10</span>
+        <span data-l="zh" class="meta-tag">版本 V1.0</span><span data-l="en" class="meta-tag">Version V1.0</span>
+        <span data-l="zh" class="meta-tag">近 90 天累计 180 条</span><span data-l="en" class="meta-tag">180 updates · last 90 days</span>
       </div>
     </header>
 
     <nav class="anchor-nav">
-      <a class="nav-pill" href="#top"><span>概览</span><b>180</b></a>
+      <a class="nav-pill" href="#top"><span><span data-l="zh">概览</span><span data-l="en">Overview</span></span><b>180</b></a>
       <a class="nav-pill" href="#m365-copilot"><span>M365 Copilot</span><b>98</b></a><a class="nav-pill" href="#copilot-studio"><span>Copilot Studio</span><b>32</b></a><a class="nav-pill" href="#azure-ai"><span>Azure AI</span><b>50</b></a>
-      <span class="nav-legend">数字 = 近 90 天累计更新条数</span>
+      <span data-l="zh" class="nav-legend">数字 = 近 90 天累计更新条数</span><span data-l="en" class="nav-legend">Number = updates in the last 90 days</span>
     </nav>
 
-    <div class="block-title">本周重点</div>
+    <div data-l="zh" class="block-title">本周重点</div><div data-l="en" class="block-title">This Week's Highlights</div>
 
     <article class="summary-card">
       <div class="summary-head">
-        <span class="chip">AI 本周趋势</span>
-        <span class="feature-date">截至 2026-07-30 12:17:10</span>
+        <span class="chip"><span data-l="zh">AI 本周趋势</span><span data-l="en">AI Weekly Trends</span></span>
+        <span class="feature-date"><span data-l="zh">截至 2026-07-30 12:17:10</span><span data-l="en">As of 2026-07-30 12:17:10</span></span>
       </div>
-      <p class="summary-intro">本次增量继续沿着 Microsoft AI『Copilot 体验融合、Agent 扩展与治理、企业数据安全』三条主线推进。M365 Copilot 仍是路线图最密集板块；Copilot Studio 需要与 Power Platform、连接器和治理一起观察；Azure AI / Foundry 继续作为模型与企业级 AI 平台底座支撑上层应用。</p>
+      <p data-l="zh" class="summary-intro">本次增量继续沿着 Microsoft AI『Copilot 体验融合、Agent 扩展与治理、企业数据安全』三条主线推进。M365 Copilot 仍是路线图最密集板块；Copilot Studio 需要与 Power Platform、连接器和治理一起观察；Azure AI / Foundry 继续作为模型与企业级 AI 平台底座支撑上层应用。</p><p data-l="en" class="summary-intro">This update continues along Microsoft AI&#39;s three main threads: unifying the Copilot experience, expanding and governing agents, and enterprise data security. M365 Copilot remains the densest area of the roadmap; Copilot Studio should be tracked together with Power Platform, connectors and governance; Azure AI / Foundry keeps serving as the model and enterprise-grade AI platform foundation beneath the application layer.</p>
       
       
       <div class="summary-section">
-        <div class="summary-section-title">🧩 M365 Copilot</div>
-        <ul class="summary-points">
-          <li>📌 本次 M365 Copilot 新增 9 条，可用于跟踪 Copilot 搜索、聊天、Outlook/Excel/移动端入口，以及 Viva / SharePoint 采用链路的最新演进。</li><li>🔎 Copilot Search 与 Copilot Chat 的融合、连接器结果的丰富展示、内容源过滤器等能力，正在推动 grounding 从『能连数据』走向『能解释和治理』。</li><li>🔐 Purview DLP、默认标签、自动标记提升等更新继续强化 Copilot 就绪度，建议把权限、标签、DLP、连接器作为一体化叙事讲给客户。</li><li>🏢 Viva Engage Agents、SharePoint 新闻分发、Viva Campaigns 等能力表明采用推广已经在产品内部形成闭环，可用于员工社区、知识运营与变革管理场景。</li>
-        </ul>
+        <div data-l="zh" class="summary-section-title">🧩 M365 Copilot</div><div data-l="en" class="summary-section-title">🧩 M365 Copilot</div>
+        <ul class="summary-points" data-l="zh"><li>📌 本次 M365 Copilot 新增 9 条，可用于跟踪 Copilot 搜索、聊天、Outlook/Excel/移动端入口，以及 Viva / SharePoint 采用链路的最新演进。</li><li>🔎 Copilot Search 与 Copilot Chat 的融合、连接器结果的丰富展示、内容源过滤器等能力，正在推动 grounding 从『能连数据』走向『能解释和治理』。</li><li>🔐 Purview DLP、默认标签、自动标记提升等更新继续强化 Copilot 就绪度，建议把权限、标签、DLP、连接器作为一体化叙事讲给客户。</li><li>🏢 Viva Engage Agents、SharePoint 新闻分发、Viva Campaigns 等能力表明采用推广已经在产品内部形成闭环，可用于员工社区、知识运营与变革管理场景。</li></ul>
+        <ul class="summary-points" data-l="en"><li>📌 9 new M365 Copilot items this cycle — useful for tracking Copilot Search, Chat, the Outlook/Excel/mobile entry points, and the latest evolution of the Viva / SharePoint adoption path.</li><li>🔎 The convergence of Copilot Search and Copilot Chat, richer connector-result rendering, and content-source filters are pushing grounding from &#39;can connect to data&#39; toward &#39;can explain and govern it&#39;.</li><li>🔐 Updates such as Purview DLP, default labels and auto-labeling improvements keep strengthening Copilot readiness — pitch permissions, labels, DLP and connectors to customers as one integrated story.</li><li>🏢 Viva Engage Agents, SharePoint news distribution and Viva Campaigns show that adoption enablement is now a closed loop inside the product, ready for employee-community, knowledge-operations and change-management scenarios.</li></ul>
       </div>
       <div class="summary-section">
-        <div class="summary-section-title">🛠️ Copilot Studio</div>
-        <ul class="summary-points">
-          <li>📌 本次 Copilot Studio / Power Platform 新增 0 条；若为 0，说明官方源暂无新条目，但需持续关注 Power Platform、Dataverse、连接器与 Agent 治理动态。</li><li>🔗 ServiceNow Connector 用户映射、查询过滤、内容源过滤等能力会直接影响 Copilot Studio 与自定义 agent 的企业知识接入质量。</li><li>🧭 面向客户时可以把 Copilot Studio 定位为『业务 agent 编排层』，用 Purview、连接器、环境隔离与 DLP 建立生产级安全边界。</li>
-        </ul>
+        <div data-l="zh" class="summary-section-title">🛠️ Copilot Studio</div><div data-l="en" class="summary-section-title">🛠️ Copilot Studio</div>
+        <ul class="summary-points" data-l="zh"><li>📌 本次 Copilot Studio / Power Platform 新增 0 条；若为 0，说明官方源暂无新条目，但需持续关注 Power Platform、Dataverse、连接器与 Agent 治理动态。</li><li>🔗 ServiceNow Connector 用户映射、查询过滤、内容源过滤等能力会直接影响 Copilot Studio 与自定义 agent 的企业知识接入质量。</li><li>🧭 面向客户时可以把 Copilot Studio 定位为『业务 agent 编排层』，用 Purview、连接器、环境隔离与 DLP 建立生产级安全边界。</li></ul>
+        <ul class="summary-points" data-l="en"><li>📌 0 new Copilot Studio / Power Platform items this cycle; when it&#39;s 0 the official sources simply had no new entries, but keep watching Power Platform, Dataverse, connectors and agent governance.</li><li>🔗 Capabilities like ServiceNow Connector user mapping, query filtering and content-source filters directly affect how well Copilot Studio and custom agents ingest enterprise knowledge.</li><li>🧭 For customers, position Copilot Studio as the &#39;business-agent orchestration layer&#39;, using Purview, connectors, environment isolation and DLP to establish a production-grade security boundary.</li></ul>
       </div>
       <div class="summary-section">
-        <div class="summary-section-title">☁️ Azure AI（Microsoft Foundry）</div>
-        <ul class="summary-points">
-          <li>📌 本次 Azure AI / Microsoft Foundry 新增 2 条；若为 0，说明本轮官方源暂无新的 AI 相关条目，但 Foundry 作为底座仍需持续关注。</li><li>🧠 Azure AI 应作为模型、评估、检索增强、托管算力、网络隔离与生产部署的底座，与 M365 Copilot / Copilot Studio 的应用层更新配套讲解。</li><li>🔐 数据治理侧的更新（Purview、SharePoint、连接器）会反向影响 Azure AI grounding、企业搜索和 agent 数据边界设计。</li>
-        </ul>
+        <div data-l="zh" class="summary-section-title">☁️ Azure AI（Microsoft Foundry）</div><div data-l="en" class="summary-section-title">☁️ Azure AI (Microsoft Foundry)</div>
+        <ul class="summary-points" data-l="zh"><li>📌 本次 Azure AI / Microsoft Foundry 新增 2 条；若为 0，说明本轮官方源暂无新的 AI 相关条目，但 Foundry 作为底座仍需持续关注。</li><li>🧠 Azure AI 应作为模型、评估、检索增强、托管算力、网络隔离与生产部署的底座，与 M365 Copilot / Copilot Studio 的应用层更新配套讲解。</li><li>🔐 数据治理侧的更新（Purview、SharePoint、连接器）会反向影响 Azure AI grounding、企业搜索和 agent 数据边界设计。</li></ul>
+        <ul class="summary-points" data-l="en"><li>📌 2 new Azure AI / Microsoft Foundry items this cycle; when it&#39;s 0 there were simply no new AI-related entries this round, but Foundry as the foundation still warrants ongoing attention.</li><li>🧠 Treat Azure AI as the foundation for models, evaluation, retrieval augmentation, managed compute, network isolation and production deployment — present it alongside the M365 Copilot / Copilot Studio application-layer updates.</li><li>🔐 Data-governance updates (Purview, SharePoint, connectors) feed back into Azure AI grounding, enterprise search and agent data-boundary design.</li></ul>
       </div>
     </article>
     <div class="feature-grid">
@@ -354,8 +393,8 @@
           <h3>M365 Copilot：Copilot Answers 全新改版 —— 回答更精炼、来源更突出</h3>
           <p class="feature-desc">Roadmap 新增更新：Microsoft 365 Copilot 应用中的 Copilot Search 将升级 Copilot Answers，提供更简洁的回答方式，并更突出显示引用来源，帮助用户更快获取关键信息与依据。</p>
           <div class="feature-actions">
-            <a class="btn primary" href="#m365-copilot">查看该分区</a>
-            <a class="btn ghost" href="https://www.microsoft.com/microsoft-365/roadmap?featureid=562354" target="_blank" rel="noreferrer">打开原文</a>
+            <a class="btn primary" href="#m365-copilot"><span data-l="zh">查看该分区</span><span data-l="en">View section</span></a>
+            <a class="btn ghost" href="https://www.microsoft.com/microsoft-365/roadmap?featureid=562354" target="_blank" rel="noreferrer"><span data-l="zh">打开原文</span><span data-l="en">Open source</span></a>
           </div>
         </article>
         <article class="feature-card">
@@ -366,8 +405,8 @@
           <h3>Copilot Studio：Purview Communication Compliance 与 Power Automate 集成计划取消（GCC-High/DoD）</h3>
           <p class="feature-desc">Roadmap 新增更新：Microsoft 决定不再推进 Purview Communication Compliance 与 Power Automate 的集成，该计划已在 GCC-High 与 DoD 中标记取消。</p>
           <div class="feature-actions">
-            <a class="btn primary" href="#copilot-studio">查看该分区</a>
-            <a class="btn ghost" href="https://www.microsoft.com/microsoft-365/roadmap?featureid=85606" target="_blank" rel="noreferrer">打开原文</a>
+            <a class="btn primary" href="#copilot-studio"><span data-l="zh">查看该分区</span><span data-l="en">View section</span></a>
+            <a class="btn ghost" href="https://www.microsoft.com/microsoft-365/roadmap?featureid=85606" target="_blank" rel="noreferrer"><span data-l="zh">打开原文</span><span data-l="en">Open source</span></a>
           </div>
         </article>
         <article class="feature-card">
@@ -378,18 +417,18 @@
           <h3>Azure AI：Microsoft Foundry 引入 GPT-transcribe 与 GPT-live-transcribe</h3>
           <p class="feature-desc">官方博客新增更新：Microsoft Foundry 推出 GPT-transcribe 和 GPT-live-transcribe，为高精度语音转写与实时转写场景提供新的模型选择，适合会议、呼叫中心与语音工作流。</p>
           <div class="feature-actions">
-            <a class="btn primary" href="#azure-ai">查看该分区</a>
-            <a class="btn ghost" href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/introducing-gpt-transcribe-and-gpt-live-transcribe-in-microsoft/ba-p/4541740" target="_blank" rel="noreferrer">打开原文</a>
+            <a class="btn primary" href="#azure-ai"><span data-l="zh">查看该分区</span><span data-l="en">View section</span></a>
+            <a class="btn ghost" href="https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/introducing-gpt-transcribe-and-gpt-live-transcribe-in-microsoft/ba-p/4541740" target="_blank" rel="noreferrer"><span data-l="zh">打开原文</span><span data-l="en">Open source</span></a>
           </div>
         </article>
     </div>
 
-    <div class="block-title">按产品浏览</div>
+    <div data-l="zh" class="block-title">按产品浏览</div><div data-l="en" class="block-title">Browse by Product</div>
 
     <section class="section" id="m365-copilot">
       <div class="section-head">
         <h2>M365 Copilot</h2>
-        <span class="section-count">近 90 天累计 98 条</span>
+        <span class="section-count"><span data-l="zh">近 90 天累计 98 条</span><span data-l="en">98 in last 90 days</span></span>
       </div>
       <div class="item-grid" data-group="m365-copilot">
 
@@ -1178,13 +1217,13 @@
             <p class="item-desc">通过 Copilot 仪表盘的 power user 洞察，了解哪些用户正在养成使用 Copilot 的习惯。</p>
           </article>
       </div>
-      <div class="more-wrap"><button class="more-btn" type="button" data-target="m365-copilot" data-total="98">查看全部 98 条 ▾</button></div>
+      <div class="more-wrap"><button class="more-btn" type="button" data-target="m365-copilot" data-total="98"></button></div>
     </section>
 
     <section class="section" id="copilot-studio">
       <div class="section-head">
         <h2>Copilot Studio</h2>
-        <span class="section-count">近 90 天累计 32 条</span>
+        <span class="section-count"><span data-l="zh">近 90 天累计 32 条</span><span data-l="en">32 in last 90 days</span></span>
       </div>
       <div class="item-grid" data-group="copilot-studio">
 
@@ -1445,13 +1484,13 @@
             <p class="item-desc">Learn What&#39;s new（2026 年 4 月）：为 Copilot Studio 与 Dynamics 365 Contact Center 构建实时语音 agent（NLU、多语种、知识集成、语音调优），并支持语音保持/恢复、通过连接器自动触发 agent 评估。</p>
           </article>
       </div>
-      <div class="more-wrap"><button class="more-btn" type="button" data-target="copilot-studio" data-total="32">查看全部 32 条 ▾</button></div>
+      <div class="more-wrap"><button class="more-btn" type="button" data-target="copilot-studio" data-total="32"></button></div>
     </section>
 
     <section class="section" id="azure-ai">
       <div class="section-head">
         <h2>Azure AI</h2>
-        <span class="section-count">近 90 天累计 50 条</span>
+        <span class="section-count"><span data-l="zh">近 90 天累计 50 条</span><span data-l="en">50 in last 90 days</span></span>
       </div>
       <div class="item-grid" data-group="azure-ai">
 
@@ -1856,37 +1895,82 @@
             <p class="item-desc">Azure OpenAI What&#39;s new（2026 年 5 月）：新增 GPT Realtime Translate（连续流式音频翻译，面向多语种直播/客服/语音助手）与 GPT Realtime Whisper（低延迟流式转写，面向实时字幕/监控/归档）概念文档。</p>
           </article>
       </div>
-      <div class="more-wrap"><button class="more-btn" type="button" data-target="azure-ai" data-total="50">查看全部 50 条 ▾</button></div>
+      <div class="more-wrap"><button class="more-btn" type="button" data-target="azure-ai" data-total="50"></button></div>
     </section>
 
-    <div class="block-title">数据来源与刷新</div>
+    <div data-l="zh" class="block-title">数据来源与刷新</div><div data-l="en" class="block-title">Sources & Refresh</div>
     <div class="sources">
       <div class="sources-grid">
 
         <div class="source-col">
-          <div class="source-col-title">Microsoft Learn</div>
+          <div class="source-col-title"><span data-l="zh">Microsoft Learn</span><span data-l="en">Microsoft Learn</span></div>
           <a class="source-link" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/release-notes" target="_blank" rel="noreferrer"><span>Microsoft 365 Copilot Release Notes</span><small>learn.microsoft.com</small></a><a class="source-link" href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/requirements-messages-management" target="_blank" rel="noreferrer"><span>Copilot Studio Billing &amp; Copilot Credits</span><small>learn.microsoft.com</small></a><a class="source-link" href="https://learn.microsoft.com/en-us/microsoft-365/copilot/extensibility/prerequisites?tabs=customers" target="_blank" rel="noreferrer"><span>Copilot Extensibility Prerequisites</span><small>learn.microsoft.com</small></a><a class="source-link" href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/whats-new" target="_blank" rel="noreferrer"><span>Copilot Studio What&#39;s new（Learn）</span><small>learn.microsoft.com</small></a><a class="source-link" href="https://learn.microsoft.com/en-us/azure/foundry-classic/openai/whats-new" target="_blank" rel="noreferrer"><span>Azure OpenAI / Foundry What&#39;s new</span><small>learn.microsoft.com</small></a>
         </div>
         <div class="source-col">
-          <div class="source-col-title">官方博客</div>
+          <div class="source-col-title"><span data-l="zh">官方博客</span><span data-l="en">Official Blogs</span></div>
           <a class="source-link" href="https://www.microsoft.com/en-us/microsoft-365/blog/feed/" target="_blank" rel="noreferrer"><span>Microsoft 365 Blog</span><small>www.microsoft.com</small></a><a class="source-link" href="https://techcommunity.microsoft.com/t5/s/gxcuf89792/rss/board?board.id=microsoft365copilotblog" target="_blank" rel="noreferrer"><span>Microsoft 365 Copilot Tech Community Blog</span><small>techcommunity.microsoft.com</small></a><a class="source-link" href="https://www.microsoft.com/en-us/power-platform/blog/feed/" target="_blank" rel="noreferrer"><span>Power Platform Blog</span><small>www.microsoft.com</small></a><a class="source-link" href="https://azure.microsoft.com/en-us/blog/feed/" target="_blank" rel="noreferrer"><span>Microsoft Azure Blog</span><small>azure.microsoft.com</small></a><a class="source-link" href="https://techcommunity.microsoft.com/t5/s/gxcuf89792/rss/board?board.id=copilot-studio-blog" target="_blank" rel="noreferrer"><span>Copilot Studio Blog（Tech Community）</span><small>techcommunity.microsoft.com</small></a><a class="source-link" href="https://techcommunity.microsoft.com/t5/s/gxcuf89792/rss/board?board.id=azure-ai-foundry-blog" target="_blank" rel="noreferrer"><span>Microsoft Foundry Blog（原 Azure AI Foundry）</span><small>techcommunity.microsoft.com</small></a>
         </div>
         <div class="source-col">
-          <div class="source-col-title">Roadmap</div>
+          <div class="source-col-title"><span data-l="zh">Roadmap</span><span data-l="en">Roadmap</span></div>
           <a class="source-link" href="https://www.microsoft.com/releasecommunications/api/v2/m365/rss" target="_blank" rel="noreferrer"><span>Microsoft 365 Roadmap</span><small>www.microsoft.com</small></a><a class="source-link" href="https://www.microsoft.com/releasecommunications/api/v2/azure/rss" target="_blank" rel="noreferrer"><span>Azure 服务更新（Azure AI Roadmap）</span><small>www.microsoft.com</small></a><a class="source-link" href="https://www.aka.ms/MCStoM365Roadmap" target="_blank" rel="noreferrer"><span>Copilot Studio Roadmap（M365 Roadmap 筛选）</span><small>www.aka.ms</small></a><a class="source-link" href="https://learn.microsoft.com/en-us/power-platform/release-plan/" target="_blank" rel="noreferrer"><span>Power Platform Roadmap（M365 Roadmap 中 Power Automate）</span><small>learn.microsoft.com</small></a>
         </div>
         <div class="source-col">
-          <div class="source-col-title">采用资源</div>
+          <div class="source-col-title"><span data-l="zh">采用资源</span><span data-l="en">Adoption Resources</span></div>
           <a class="source-link" href="https://adoption.microsoft.com/en-us/copilot/" target="_blank" rel="noreferrer"><span>Copilot 采用中心（Adoption）</span><small>adoption.microsoft.com</small></a><a class="source-link" href="https://support.microsoft.com/copilot" target="_blank" rel="noreferrer"><span>Microsoft 365 Copilot 支持中心（Support）</span><small>support.microsoft.com</small></a>
         </div>
       </div>
       <div class="footer-meta">
-        本站数据由自动化每日抓取上述官方公开来源并去重整理。最近刷新时间：2026-07-30 12:17:10（北京时间）。当前版本 V1.0，近 90 天累计 180 条更新。
+        <span data-l="zh">本站数据由自动化每日抓取上述官方公开来源并去重整理。最近刷新时间：2026-07-30 12:17:10（北京时间）。当前版本 V1.0，近 90 天累计 180 条更新。</span><span data-l="en">Data is aggregated and de-duplicated daily from the official public sources above. Last refreshed: 2026-07-30 12:17:10 (Beijing time). Version V1.0, 180 updates in the last 90 days.</span>
       </div>
     </div>
   </div>
 
   <script>
+    const INITIAL_VISIBLE = 6;
+    const MORE_LABELS = {
+      showAll: { zh: n => "查看全部 " + n + " 条 ▾", en: n => "Show all " + n + " ▾" },
+      collapse: { zh: "收起 ▴", en: "Collapse ▴" }
+    };
+
+    function currentLang() {
+      return document.documentElement.getAttribute("data-lang") === "en" ? "en" : "zh";
+    }
+
+    function updateMoreButtons() {
+      const lang = currentLang();
+      document.querySelectorAll(".more-btn").forEach(btn => {
+        const grid = document.querySelector('[data-group="' + btn.dataset.target + '"]');
+        if (!grid) return;
+        const collapsed = grid.querySelector(".item.is-hidden") !== null;
+        btn.textContent = collapsed
+          ? MORE_LABELS.showAll[lang](btn.dataset.total)
+          : MORE_LABELS.collapse[lang];
+      });
+    }
+
+    function setLang(lang) {
+      lang = lang === "en" ? "en" : "zh";
+      document.documentElement.setAttribute("data-lang", lang);
+      document.documentElement.setAttribute("lang", lang === "en" ? "en" : "zh-CN");
+      try { localStorage.setItem("scoutLang", lang); } catch (e) {}
+      document.querySelectorAll(".lang-btn").forEach(b =>
+        b.classList.toggle("active", b.dataset.lang === lang)
+      );
+      updateMoreButtons();
+    }
+
+    document.querySelectorAll(".lang-btn").forEach(b =>
+      b.addEventListener("click", () => setLang(b.dataset.lang))
+    );
+
+    // Allow the host page (e.g. ABS Hub) to sync the iframe language live.
+    window.addEventListener("message", e => {
+      const d = e.data;
+      if (d && (d.type === "setLang" || d.type === "scout:setLang") && (d.lang === "en" || d.lang === "zh")) {
+        setLang(d.lang);
+      }
+    });
+
     document.querySelectorAll(".more-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const grid = document.querySelector('[data-group="' + btn.dataset.target + '"]');
@@ -1894,15 +1978,17 @@
         const hidden = grid.querySelectorAll(".item.is-hidden");
         if (hidden.length) {
           hidden.forEach(el => el.classList.remove("is-hidden"));
-          btn.textContent = "收起 ▴";
         } else {
           const items = grid.querySelectorAll(".item");
-          items.forEach((el, i) => { if (i >= 6) el.classList.add("is-hidden"); });
-          btn.textContent = "查看全部 " + btn.dataset.total + " 条 ▾";
+          items.forEach((el, i) => { if (i >= INITIAL_VISIBLE) el.classList.add("is-hidden"); });
           grid.closest("section").scrollIntoView({ behavior: "smooth", block: "start" });
         }
+        updateMoreButtons();
       });
     });
+
+    // Sync toggle + button labels with the language chosen in <head>.
+    setLang(currentLang());
   </script>
 </body>
 </html>
