@@ -81,6 +81,78 @@ function urlOf(item) {
   return item.sourceLinks && item.sourceLinks[0] ? item.sourceLinks[0].url : "";
 }
 
+function sourceKey(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "") || "other";
+}
+
+function titleKeyword(title, pattern) {
+  return pattern.test(String(title || ""));
+}
+
+function summarizeThemes(group) {
+  const themesByGroup = {
+    "m365-copilot": [
+      { zh: "Edge 与浏览器工作流", en: "Edge and browser workflows", test: /(edge|browser|search|autofill|inprivate)/i },
+      { zh: "Teams 与会议智能", en: "Teams and meeting intelligence", test: /(teams|meeting|facilitator|recap|archive)/i },
+      { zh: "Viva 与员工体验", en: "Viva and employee experience", test: /(viva|engage|dashboard|survey|topic)/i },
+      { zh: "SharePoint / OneNote 知识沉淀", en: "SharePoint / OneNote knowledge flows", test: /(sharepoint|onenote|notebook|connections)/i },
+      { zh: "Purview 与数据治理", en: "Purview and data governance", test: /(purview|label|dlp|retention|lifecycle)/i },
+      { zh: "Agent 扩展与主权云", en: "Agent extensibility and sovereign cloud", test: /(agent|extensibility|gcc|dod|government|mcp)/i }
+    ],
+    "copilot-studio": [
+      { zh: "Dataverse 与开发者插件", en: "Dataverse and developer plugins", test: /(dataverse|plugin|codex|openai)/i },
+      { zh: "业务数据 AI 字段化", en: "AI fields embedded in business data", test: /(prompt columns|prompt|persisted ai insights)/i },
+      { zh: "Power Pages 安全与治理", en: "Power Pages security and governance", test: /(power pages|security agent|authorization|permissions)/i },
+      { zh: "自动化与流程集成", en: "Automation and workflow integration", test: /(power automate|workflow|flow|compliance)/i }
+    ],
+    "azure-ai": [
+      { zh: "Foundry 模型与平台能力", en: "Foundry models and platform capabilities", test: /(foundry|model|databricks|gateway|pricing)/i },
+      { zh: "语音与转写能力", en: "Speech and transcription", test: /(transcribe|speech|voice|audio)/i },
+      { zh: "端侧 AI 与安全评估", en: "On-device AI and safety", test: /(device|local models|red teaming|secure|security)/i },
+      { zh: "企业级规模化 AI", en: "Enterprise-scale AI", test: /(enterprise|avatar|token|workloads|compute)/i }
+    ]
+  };
+  const themes = themesByGroup[group.id] || [];
+  const ranked = themes
+    .map(theme => ({
+      ...theme,
+      count: group.records.filter(item => titleKeyword(item.title, theme.test) || titleKeyword(item.summary, theme.test)).length
+    }))
+    .filter(theme => theme.count > 0)
+    .sort((a, b) => b.count - a.count);
+  return ranked.slice(0, 3);
+}
+
+function summarizeGroup(group) {
+  const sourceCounts = group.records.reduce((acc, item) => {
+    const key = item.source || "其他";
+    acc[key] = (acc[key] || 0) + 1;
+    return acc;
+  }, {});
+  const topSources = Object.entries(sourceCounts).sort((a, b) => b[1] - a[1]);
+  const latestTitles = group.records.slice(0, 2).map(item => item.title.replace(/^.*?：\s*/, ""));
+  const themes = summarizeThemes(group);
+  const topSourceZh = topSources.length ? `${topSources[0][0]} ${topSources[0][1]} 条` : "暂无新增";
+  const topSourceEn = topSources.length ? `${topSources[0][0]} ${topSources[0][1]} items` : "No updates";
+  const themeZh = themes.length ? themes.map(t => t.zh).join("、") : "按最新标题快速浏览";
+  const themeEn = themes.length ? themes.map(t => t.en).join(", ") : "scan the latest titles first";
+  return {
+    zh: [
+      `近 ${BASELINE_DAYS} 天共 ${group.records.length} 条，当前以 ${topSourceZh} 为主。`,
+      `重点主题：${themeZh}。`,
+      latestTitles.length ? `优先关注：${latestTitles.join("；")}。` : "优先关注最新发布的高频更新。"
+    ],
+    en: [
+      `${group.records.length} updates in the last ${BASELINE_DAYS} days, led by ${topSourceEn}.`,
+      `Key themes: ${themeEn}.`,
+      latestTitles.length ? `Start with: ${latestTitles.join("; ")}.` : "Start with the most recent updates."
+    ]
+  };
+}
+
 function renderFeatureCard(group) {
   const item = group.records[0];
   if (!item) {
@@ -113,7 +185,7 @@ function renderItem(item, hidden) {
     ? `<a href="${escapeHtml(url)}" target="_blank" rel="noreferrer">${escapeHtml(item.title)}</a>`
     : escapeHtml(item.title);
   return `
-          <article class="item${hidden ? " is-hidden" : ""}">
+          <article class="item${hidden ? " is-hidden" : ""}" data-source="${escapeHtml(sourceKey(item.source))}">
             <div class="item-top">
               <span class="item-date">${escapeHtml(item.date)}</span>
               <span class="item-source">${escapeHtml(item.source)}</span>
@@ -125,19 +197,41 @@ function renderItem(item, hidden) {
 
 function renderGroupSection(group) {
   const total = group.records.length;
+  const groupSummary = summarizeGroup(group);
+  const sourceFilters = [
+    { key: "all", zh: "全部", en: "All", count: total },
+    ...Object.entries(group.records.reduce((acc, item) => {
+      const key = sourceKey(item.source);
+      if (!acc[key]) acc[key] = { key, zh: item.source, en: item.source, count: 0 };
+      acc[key].count += 1;
+      return acc;
+    }, {})).map(([, value]) => value)
+  ];
   const items = group.records.map((item, i) => renderItem(item, i >= INITIAL_VISIBLE)).join("");
   const moreBtn = total > INITIAL_VISIBLE
     ? `<div class="more-wrap"><button class="more-btn" type="button" data-target="${escapeHtml(group.id)}" data-total="${total}"></button></div>`
     : "";
   return `
-    <section class="section" id="${escapeHtml(group.id)}">
+    <section class="section" id="${escapeHtml(group.id)}" data-filter="all" data-expanded="false">
       <div class="section-head">
         <h2>${escapeHtml(group.label)}</h2>
         <span class="section-count">${bi(`近 ${BASELINE_DAYS} 天累计 ${total} 条`, `${total} in last ${BASELINE_DAYS} days`)}</span>
       </div>
+      <div class="section-summary">
+        <div class="section-summary-head">
+          <span class="chip">${bi("本区重点", "Section focus")}</span>
+          <span class="feature-date">${bi("AI 辅助提炼", "AI-assisted summary")}</span>
+        </div>
+        <ul class="section-summary-list" data-l="zh">${groupSummary.zh.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul>
+        <ul class="section-summary-list" data-l="en">${groupSummary.en.map(x => `<li>${escapeHtml(x)}</li>`).join("")}</ul>
+      </div>
+      <div class="section-tools" role="toolbar" aria-label="Section filters">
+        ${sourceFilters.map(filter => `<button type="button" class="filter-chip${filter.key === "all" ? " active" : ""}" data-group="${escapeHtml(group.id)}" data-source-filter="${escapeHtml(filter.key)}">${bi(`${escapeHtml(filter.zh)} · ${filter.count}`, `${escapeHtml(filter.en)} · ${filter.count}`)}</button>`).join("")}
+      </div>
       <div class="item-grid" data-group="${escapeHtml(group.id)}">
 ${items || `<div class="empty">${bi("当前暂无公开更新", "No public updates yet")}</div>`}
       </div>
+      <div class="empty empty-filter" data-empty-for="${escapeHtml(group.id)}" hidden>${bi("当前筛选条件下暂无结果", "No results for this filter")}</div>
       ${moreBtn}
     </section>`;
 }
@@ -403,6 +497,56 @@ function buildHtml(data, summary) {
       padding-left: 2px;
     }
 
+    .section-summary {
+      margin: 0 0 12px;
+      padding: 16px 18px;
+      border: 1px solid var(--cp-border);
+      border-left: 4px solid var(--cp-accent);
+      border-radius: 14px;
+      background: var(--cp-surface);
+      box-shadow: var(--cp-card-shadow);
+    }
+    .section-summary-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .section-summary-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--cp-text);
+      display: grid;
+      gap: 6px;
+      font-size: 13.5px;
+    }
+    .section-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0 0 12px;
+    }
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--cp-border-strong);
+      background: var(--cp-surface);
+      color: var(--cp-text-muted);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .filter-chip.active {
+      border-color: var(--cp-accent);
+      background: var(--cp-accent-soft);
+      color: var(--cp-accent);
+    }
+    .filter-chip:hover { border-color: var(--cp-accent); color: var(--cp-accent); }
+
     /* Feature cards */
     .feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
     .feature-card {
@@ -456,7 +600,7 @@ function buildHtml(data, summary) {
       background: var(--cp-surface);
       box-shadow: var(--cp-card-shadow);
     }
-    .item.is-hidden { display: none; }
+    .item.is-hidden, .item.is-filtered-out { display: none; }
     .item-top { display: flex; align-items: center; gap: 10px; }
     .item-date { font-size: 12px; font-weight: 700; color: var(--cp-text); }
     .item-source {
@@ -596,13 +740,37 @@ ${sourcesHtml}
     function updateMoreButtons() {
       const lang = currentLang();
       document.querySelectorAll(".more-btn").forEach(btn => {
+        const section = document.getElementById(btn.dataset.target);
         const grid = document.querySelector('[data-group="' + btn.dataset.target + '"]');
-        if (!grid) return;
-        const collapsed = grid.querySelector(".item.is-hidden") !== null;
+        if (!grid || !section) return;
+        const total = Number(section.dataset.visibleCount || btn.dataset.total || 0);
+        const collapsed = section.dataset.expanded !== "true" && total > INITIAL_VISIBLE;
+        btn.dataset.total = String(total);
+        btn.hidden = total <= INITIAL_VISIBLE;
         btn.textContent = collapsed
-          ? MORE_LABELS.showAll[lang](btn.dataset.total)
+          ? MORE_LABELS.showAll[lang](total)
           : MORE_LABELS.collapse[lang];
       });
+    }
+
+    function applySectionState(section) {
+      const filter = section.dataset.filter || "all";
+      const expanded = section.dataset.expanded === "true";
+      const items = [...section.querySelectorAll(".item")];
+      let visibleCount = 0;
+      items.forEach(item => {
+        const match = filter === "all" || item.dataset.source === filter;
+        item.classList.toggle("is-filtered-out", !match);
+        if (!match) {
+          item.classList.add("is-hidden");
+          return;
+        }
+        item.classList.toggle("is-hidden", !expanded && visibleCount >= INITIAL_VISIBLE);
+        visibleCount += 1;
+      });
+      section.dataset.visibleCount = String(visibleCount);
+      const empty = section.querySelector("[data-empty-for]");
+      if (empty) empty.hidden = visibleCount !== 0;
     }
 
     function setLang(lang) {
@@ -620,6 +788,20 @@ ${sourcesHtml}
       b.addEventListener("click", () => setLang(b.dataset.lang))
     );
 
+    document.querySelectorAll(".filter-chip").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const section = document.getElementById(btn.dataset.group);
+        if (!section) return;
+        section.dataset.filter = btn.dataset.sourceFilter;
+        section.dataset.expanded = "false";
+        section.querySelectorAll(".filter-chip").forEach(chip =>
+          chip.classList.toggle("active", chip === btn)
+        );
+        applySectionState(section);
+        updateMoreButtons();
+      });
+    });
+
     // Allow the host page (e.g. ABS Hub) to sync the iframe language live.
     window.addEventListener("message", e => {
       const d = e.data;
@@ -630,21 +812,19 @@ ${sourcesHtml}
 
     document.querySelectorAll(".more-btn").forEach(btn => {
       btn.addEventListener("click", () => {
-        const grid = document.querySelector('[data-group="' + btn.dataset.target + '"]');
-        if (!grid) return;
-        const hidden = grid.querySelectorAll(".item.is-hidden");
-        if (hidden.length) {
-          hidden.forEach(el => el.classList.remove("is-hidden"));
-        } else {
-          const items = grid.querySelectorAll(".item");
-          items.forEach((el, i) => { if (i >= INITIAL_VISIBLE) el.classList.add("is-hidden"); });
-          grid.closest("section").scrollIntoView({ behavior: "smooth", block: "start" });
+        const section = document.getElementById(btn.dataset.target);
+        if (!section) return;
+        section.dataset.expanded = section.dataset.expanded === "true" ? "false" : "true";
+        applySectionState(section);
+        if (section.dataset.expanded !== "true") {
+          section.scrollIntoView({ behavior: "smooth", block: "start" });
         }
         updateMoreButtons();
       });
     });
 
     // Sync toggle + button labels with the language chosen in <head>.
+    document.querySelectorAll(".section").forEach(applySectionState);
     setLang(currentLang());
   </script>
 </body>
