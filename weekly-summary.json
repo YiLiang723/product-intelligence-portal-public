@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-08-03T11:08:07+08:00",
+  "generatedAt": "2026-08-04T11:04:33+08:00",
   "intro": "本次增量围绕 Microsoft AI 产品线的 Copilot 体验、Agent 治理、Power Platform 扩展与 Azure AI / Foundry 平台能力更新展开。",
   "sections": [
     {
       "emoji": "🧩",
       "title": "M365 Copilot",
       "points": [
-        "📌 本次 M365 Copilot 新增 1 条，重点关注 Copilot 体验入口、搜索/聊天融合、Teams/Edge/SharePoint/Viva 场景和 Purview 数据治理。",
+        "📌 本次 M365 Copilot 新增 8 条，重点关注 Copilot 体验入口、搜索/聊天融合、Teams/Edge/SharePoint/Viva 场景和 Purview 数据治理。",
         "🔐 建议继续把权限、标签、DLP、连接器和内容源过滤作为 Copilot 就绪度核心叙事。",
         "🏢 Viva、SharePoint、Teams 与 Edge 的更新说明 Copilot 正从单点助手走向完整员工体验链路。"
       ]
@@ -15,7 +15,7 @@
       "emoji": "🛠️",
       "title": "Copilot Studio",
       "points": [
-        "📌 本次 Copilot Studio / Power Platform 新增 0 条；若为 0，说明官方源暂无新条目，但仍需关注 Power Platform、Dataverse、连接器和 agent 治理变化。",
+        "📌 本次 Copilot Studio / Power Platform 新增 1 条；若为 0，说明官方源暂无新条目，但仍需关注 Power Platform、Dataverse、连接器和 agent 治理变化。",
         "🔗 Copilot Studio 应继续定位为业务 agent 编排层，并与 Purview、DLP、连接器、环境治理形成生产级边界。",
         "🧭 面向客户时可将 M365 Copilot 连接器与 Power Platform 自动化能力共同纳入 agent 方案。"
       ]
