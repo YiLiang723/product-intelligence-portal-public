@@ -1,31 +1,27 @@
 {
-  "generatedAt": "2026-08-18T10:55:37+08:00",
-  "intro": "本次增量聚焦 M365 Copilot 文件与任务协作、SharePoint/Teams 内容体验、Purview eDiscovery，以及 Azure AI agent 优化和医疗行业 agent 上架。",
+  "generatedAt": "2026-08-18T11:17:08+08:00",
+  "intro": "本次增量仅新增 Power Platform 社区会议相关更新；其他官方来源未发现新条目。",
   "sections": [
     {
       "emoji": "🧩",
       "title": "M365 Copilot",
       "points": [
-        "📌 本次 M365 Copilot 新增 4 条，集中在 SharePoint/Teams/OneDrive/Planner 的文件与任务协作体验。",
-        "🔐 Purview eDiscovery 扩展到 SharePoint Embedded container，说明 Copilot 就绪的数据治理边界继续向新型内容容器延伸。",
-        "📁 OneDrive Web 文件 Copilot 能力增强、Teams SharePoint 缩略图预览和 Planner 私人任务更新，有利于把 Copilot 融入日常内容与任务流。"
+        "📌 本次 M365 Copilot 无新增；继续关注 Copilot 体验入口、治理与企业数据 grounding。"
       ]
     },
     {
       "emoji": "🛠️",
       "title": "Copilot Studio",
       "points": [
-        "📌 本次 Copilot Studio / Power Platform 无新增；建议继续关注 Dataverse、连接器、agent readiness 与环境治理方向。",
-        "🧭 当前 M365 Copilot 与 Azure AI 的更新仍会影响 Studio 方案设计，特别是数据治理、agent 优化和行业 agent 模式。"
+        "📌 本次 Power Platform 新增 1 条：PPCC 2026 开放注册，适合低代码、AI、专业开发和企业转型团队规划学习与社区交流。",
+        "🧭 可作为客户 enablement 和社区活动推荐素材，帮助推动 Power Platform / Copilot Studio 技能提升。"
       ]
     },
     {
       "emoji": "☁️",
       "title": "Azure AI（Microsoft Foundry）",
       "points": [
-        "📌 本次 Azure AI 新增 2 条：Agent Optimization 经济学，以及 Dragon Copilot Physician Apps and Agents 在 Marketplace GA。",
-        "🏥 Dragon Copilot 上架体现行业 agent 正进入更可采购、可部署的阶段，适合医疗行业场景沟通。",
-        "📈 Agent Optimization 主题适合客户从试点走向可衡量 ROI 的讨论，强调成本、质量和业务结果。"
+        "📌 本次 Azure AI / Microsoft Foundry 无新增；继续关注模型、agent 优化、平台治理和生产部署底座。"
       ]
     }
   ]
