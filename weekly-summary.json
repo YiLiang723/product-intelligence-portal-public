@@ -1,31 +1,30 @@
 {
-  "generatedAt": "2026-08-20T11:05:27+08:00",
-  "intro": "本次增量重点落在 M365 Copilot 的连接器、Work IQ API、PowerPoint/Planner/Teams/Edge 体验，以及 Azure AI 的开放模型和云原生应用平台能力。",
+  "generatedAt": "2026-08-21T11:13:11+08:00",
+  "intro": "本次增量聚焦 Copilot 连接器自助接入、Copilot 写作体验、SharePoint 存储计费、Copilot Studio Agent 身份治理，以及 Azure Copilot agent 入口。",
   "sections": [
     {
       "emoji": "🧩",
       "title": "M365 Copilot",
       "points": [
-        "📌 本次 M365 Copilot 新增 11 条，集中在 Federated Copilot Connectors、Work IQ APIs、组织提示词委派发布、Teams/Planner/PowerPoint/Edge 体验。",
-        "🔗 Federated connectors 和 Work IQ APIs 说明 Copilot 正在向更开放的企业 agent / connector 生态扩展。",
-        "📊 Planner AI filters、Teams 聊天摘要、SharePoint app in Teams 与 PowerPoint 图片引用进一步补齐从内容到执行的工作流。"
+        "📌 本次 M365 Copilot 新增 5 条，覆盖 SharePoint PAYGO 存储、Writing Blocks、自助同步连接器、Viva Glint 调查与公告体验。",
+        "🔗 Self-serve sync connectors 让用户可接入 Jira/Confluence 等外部源，需同步关注权限和治理。",
+        "✍️ Writing Blocks 把 Copilot Chat 进一步推进到内联内容编辑与写作迭代场景。"
       ]
     },
     {
       "emoji": "🛠️",
       "title": "Copilot Studio",
       "points": [
-        "📌 本次 Copilot Studio 新增 1 条：Agent 评估体验增强。",
-        "🧪 评估体验增强有助于 maker 更好理解 agent 质量与行为表现，是规模化 agent 上线前的重要治理能力。"
+        "📌 本次 Copilot Studio 新增 1 条：新建 agent 自动创建 Microsoft Entra Agent ID。",
+        "🔐 Entra Agent ID 成为 agent 身份治理核心，影响连接器权限、条件访问、DLP 和审计方案。"
       ]
     },
     {
       "emoji": "☁️",
       "title": "Azure AI（Microsoft Foundry）",
       "points": [
-        "📌 本次 Azure AI 新增 2 条：Foundry 新增 DeepSeek / NVIDIA Nemotron 模型，以及 Microsoft 获评 Gartner 云原生应用平台领导者。",
-        "🧠 Foundry 模型选择继续扩展，客户可更灵活地评估开放模型与企业部署策略。",
-        "☁️ 云原生应用平台能力仍是 AI 应用现代化和 agent 生产部署的重要底座。"
+        "📌 本次 Azure AI 新增 1 条：Azure Copilot 支持直接访问 agents。",
+        "🤖 Azure Copilot 正从云助手向可执行 agent 入口演进，适合 Azure 运维、治理与开发者效率场景。"
       ]
     }
   ]
