@@ -1,30 +1,29 @@
 {
-  "generatedAt": "2026-08-24T11:17:01+08:00",
-  "intro": "本次增量聚焦 PowerPoint Agent Mode 与 Work IQ、Planner 容量视图、政府云 Copilot 使用报表，以及 Foundry 安全 agent 与模型路由能力。",
+  "generatedAt": "2026-08-25T11:18:16+08:00",
+  "intro": "本次增量聚焦 Planner 协作、Microsoft Foundry 生产级 agent 实践、A2A 互操作以及 Copilot Studio / Foundry IQ 检索模式评估。",
   "sections": [
     {
       "emoji": "🧩",
       "title": "M365 Copilot",
       "points": [
-        "📌 本次 M365 Copilot 新增 8 条，重点是 PowerPoint Agent Mode 引用 SharePoint/OneDrive 文件、Work IQ 引用邮件、Work IQ API 统一端点和 Planner Capacity View。",
-        "📊 GCC High/DoD 新增 Copilot 使用报表，提升政府云客户采用度量能力。",
-        "🧩 PowerPoint + Work IQ + SharePoint/OneDrive 文件引用进一步增强企业材料生成的 grounding 能力。"
+        "📌 本次 M365 Copilot 新增 2 条：Planner 自定义模板，以及 Teams 共享/私有频道支持 Planner tab。",
+        "📋 Planner 继续增强项目管理和 Teams 内任务协作能力，有助于把 Copilot/Planner 从个人任务推进到团队协作场景。"
       ]
     },
     {
       "emoji": "🛠️",
       "title": "Copilot Studio",
       "points": [
-        "📌 本次 Copilot Studio / Power Platform 无新增；建议继续关注 agent 评估、身份治理和连接器能力。"
+        "📌 本次 Copilot Studio 相关新增 1 条：Copilot Studio 与 Foundry IQ 检索模式基准测试。",
+        "🔎 该更新适合用于 grounding、retrieval、RAG 方案评估，帮助客户选择更合适的知识检索架构。"
       ]
     },
     {
       "emoji": "☁️",
       "title": "Azure AI（Microsoft Foundry）",
       "points": [
-        "📌 本次 Azure AI 新增 2 条：SAFE Agent 架构与 Foundry Model Router 更新。",
-        "🛡️ SAFE Agent 强调范围、锚定决策、流程完整性和升级控制，是生产级 agent 治理的重要参考。",
-        "🚦Model Router 新区域和模型池更新有助于客户平衡质量、成本和区域可用性。"
+        "📌 本次 Azure AI / Foundry 新增 2 条：生产级 AI Agents 的 10 条经验，以及 Hosted Agent 的 A2A endpoint / Agent Card。",
+        "🤖 Foundry 的重点从模型可用性继续走向 agent 生产化、互操作和治理，可用于 AgentOps 与多 agent 架构讨论。"
       ]
     }
   ]
