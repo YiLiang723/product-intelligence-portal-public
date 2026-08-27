@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-08-26T11:04:44+08:00",
-  "intro": "本次增量聚焦声明式 Agent 对扫描 PDF 的理解、Copilot Notebooks 引用 Power BI 报表、Planner Connected Plans，以及 Dataverse MCP Server 与 Foundry agent 的业务数据集成。",
+  "generatedAt": "2026-08-27T11:15:33+08:00",
+  "intro": "本次增量重点在 M365 文件共享、Copilot Dashboard、Planner 进度管理、Copilot Studio 连接器配置，以及 Azure SRE Agent 与 Grok 4.6 模型。",
   "sections": [
     {
       "emoji": "🧩",
       "title": "M365 Copilot",
       "points": [
-        "📌 本次 M365 Copilot 新增 3 条：声明式 Agent 支持扫描 PDF、Copilot Notebooks 引用 Power BI 报表、Planner Connected Plans。",
-        "📊 Power BI 报表进入 Copilot Notebooks，说明数据分析成果正在成为 Copilot 知识工作台的一等引用来源。",
-        "📄 扫描 PDF 理解能力增强，有助于纸质文档、合同、报告等非结构化内容进入 agent 场景。"
+        "📌 本次 M365 Copilot 新增 5 条，覆盖文件/文件夹共享、Copilot Dashboard 智能摘要、Edge Workspaces、Planner 进度字段和 SharePoint News AI overview。",
+        "📊 Copilot Dashboard 智能摘要和 Planner 完成百分比进一步强化采用度量与项目执行管理。"
       ]
     },
     {
       "emoji": "🛠️",
       "title": "Copilot Studio",
       "points": [
-        "📌 本次无 Copilot Studio 官方源新增，但 Dataverse MCP Server 与 Foundry agent 的集成对 Copilot Studio 架构同样有参考价值。"
+        "📌 本次 Copilot Studio 新增 1 条：连接器对话式配置。",
+        "🔌 对话式配置可降低 maker 连接数据源和业务系统的门槛。"
       ]
     },
     {
       "emoji": "☁️",
       "title": "Azure AI（Microsoft Foundry）",
       "points": [
-        "📌 本次 Azure AI 新增 1 条：在 Foundry 中使用 Dataverse MCP Server。",
-        "🔗 Dataverse 通过 MCP server 进入 Foundry agent 工作流，强化业务数据到 AI agent 的连接路径。"
+        "📌 本次 Azure AI 新增 4 条，包含 Grok 4.6、Azure SRE Agent Live Reports、30 天试用和 VNet 集成。",
+        "🤖 Grok 4.6 强化长程推理与复杂工作流；SRE Agent 更新则推进智能运维场景生产化。"
       ]
     }
   ]
