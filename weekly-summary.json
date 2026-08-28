@@ -1,29 +1,30 @@
 {
-  "generatedAt": "2026-08-27T11:15:33+08:00",
-  "intro": "本次增量重点在 M365 文件共享、Copilot Dashboard、Planner 进度管理、Copilot Studio 连接器配置，以及 Azure SRE Agent 与 Grok 4.6 模型。",
+  "generatedAt": "2026-08-28T11:13:06+08:00",
+  "intro": "本次增量聚焦 Copilot 多模态理解、SharePoint DLP 动态范围、Viva Engage 活动运营、Planner 可视化、Copilot Studio agent 协作，以及 Foundry 文档解析能力。",
   "sections": [
     {
       "emoji": "🧩",
       "title": "M365 Copilot",
       "points": [
-        "📌 本次 M365 Copilot 新增 5 条，覆盖文件/文件夹共享、Copilot Dashboard 智能摘要、Edge Workspaces、Planner 进度字段和 SharePoint News AI overview。",
-        "📊 Copilot Dashboard 智能摘要和 Planner 完成百分比进一步强化采用度量与项目执行管理。"
+        "📌 本次 M365 Copilot 新增 4 条：Copilot Chat 利用嵌入图片、Purview DLP Adaptive Scopes、Viva Engage Campaigns Hub、Planner 条件着色。",
+        "🖼️ Copilot 对图片内容的理解增强，推动多模态工作流从文档文本走向图文混合内容。",
+        "🔐 DLP Adaptive Scopes 继续加强 Copilot 就绪所需的数据保护能力。"
       ]
     },
     {
       "emoji": "🛠️",
       "title": "Copilot Studio",
       "points": [
-        "📌 本次 Copilot Studio 新增 1 条：连接器对话式配置。",
-        "🔌 对话式配置可降低 maker 连接数据源和业务系统的门槛。"
+        "📌 本次 Copilot Studio 新增 1 条：maker 之间共享 agents。",
+        "🤝 Agent 共享能力有助于 CoE、平台团队和业务 maker 协作复用 agent 资产。"
       ]
     },
     {
       "emoji": "☁️",
       "title": "Azure AI（Microsoft Foundry）",
       "points": [
-        "📌 本次 Azure AI 新增 4 条，包含 Grok 4.6、Azure SRE Agent Live Reports、30 天试用和 VNet 集成。",
-        "🤖 Grok 4.6 强化长程推理与复杂工作流；SRE Agent 更新则推进智能运维场景生产化。"
+        "📌 本次 Azure AI 新增 2 条，均围绕 Cohere Parse v5。",
+        "📄 Cohere Parse v5 补强文档解析和结构化提取能力，适合 RAG 数据准备与 agent grounding。"
       ]
     }
   ]
