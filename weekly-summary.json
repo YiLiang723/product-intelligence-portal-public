@@ -1,30 +1,32 @@
 {
-  "generatedAt": "2026-08-28T11:13:06+08:00",
-  "intro": "本次增量聚焦 Copilot 多模态理解、SharePoint DLP 动态范围、Viva Engage 活动运营、Planner 可视化、Copilot Studio agent 协作，以及 Foundry 文档解析能力。",
+  "generatedAt": "2026-08-30T12:30:07+08:00",
+  "intro": "本次增量新增 11 条产品更新：M365 Copilot 7 条、Copilot Studio / Power Platform 2 条、Azure AI 2 条。整体趋势集中在 Copilot/agent 管理面、Copilot Studio 工具化与治理、以及 Foundry 实时交互与 agent 成本优化。",
   "sections": [
     {
       "emoji": "🧩",
       "title": "M365 Copilot",
       "points": [
-        "📌 本次 M365 Copilot 新增 4 条：Copilot Chat 利用嵌入图片、Purview DLP Adaptive Scopes、Viva Engage Campaigns Hub、Planner 条件着色。",
-        "🖼️ Copilot 对图片内容的理解增强，推动多模态工作流从文档文本走向图文混合内容。",
-        "🔐 DLP Adaptive Scopes 继续加强 Copilot 就绪所需的数据保护能力。"
+        "📌 M365 Copilot 新增 7 条，均来自 Roadmap，覆盖 Edge 自动打开 Copilot 侧边栏、Agent 365 控制平面、Teams 会议知识留存、Viva Glint 管理配置助手、统一 agent/app 安装管理、maker 间 agent sharing，以及 Teams 中启用现有应用对应 agents。",
+        "🤖 方向上从单点 Copilot 功能继续扩展到组织级 agent 管理、Teams/Edge 工作流入口和跨管理中心一致治理。",
+        "🔐 Agent 365、统一安装管理和会议知识留存值得纳入 IT 治理、权限边界和知识保留策略讨论。"
       ]
     },
     {
       "emoji": "🛠️",
       "title": "Copilot Studio",
       "points": [
-        "📌 本次 Copilot Studio 新增 1 条：maker 之间共享 agents。",
-        "🤝 Agent 共享能力有助于 CoE、平台团队和业务 maker 协作复用 agent 资产。"
+        "📌 Copilot Studio / Power Platform 新增 2 条：Power Platform / Dataverse 并入 AI at Work always-on roadmap；Copilot Studio 7 月 What's new 汇总 Agent ID、MCP 工具、MCP 认证、实时 agent、环境级遥测与会话附件。",
+        "🧰 这些更新强化了 agent 从构建、认证、监控到多渠道部署的生产化路径。",
+        "🏗️ 对 CoE 和平台团队而言，重点是把 maker 协作、MCP 工具治理、Entra Agent ID 和遥测能力纳入标准架构。"
       ]
     },
     {
       "emoji": "☁️",
       "title": "Azure AI（Microsoft Foundry）",
       "points": [
-        "📌 本次 Azure AI 新增 2 条，均围绕 Cohere Parse v5。",
-        "📄 Cohere Parse v5 补强文档解析和结构化提取能力，适合 RAG 数据准备与 agent grounding。"
+        "📌 Azure AI 新增 2 条：Microsoft Foundry 的 agent 成本优化四个杠杆，以及 Azure OpenAI / Foundry 经典门户 What's new 中 GPT Realtime 2.0、Realtime Translate 与 Realtime Whisper 文档更新。",
+        "🧠 Foundry 方向继续围绕生产级 agent 的成本、实时语音、翻译与转写能力补强。",
+        "🚀 适合用于语音 agent、实时交互、RAG/agent 成本治理和 Azure AI Foundry 架构选型材料。"
       ]
     }
   ]
