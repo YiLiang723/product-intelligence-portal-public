@@ -1,32 +1,32 @@
 {
-  "generatedAt": "2026-08-30T12:30:07+08:00",
-  "intro": "本次增量新增 11 条产品更新：M365 Copilot 7 条、Copilot Studio / Power Platform 2 条、Azure AI 2 条。整体趋势集中在 Copilot/agent 管理面、Copilot Studio 工具化与治理、以及 Foundry 实时交互与 agent 成本优化。",
+  "generatedAt": "2026-09-06T12:41:24+08:00",
+  "intro": "本次增量新增 9 条产品更新：M365 Copilot 4 条、Copilot Studio 2 条、Azure AI 3 条。重点关注 Copilot/agent 生态、Copilot Studio 工具与治理、以及 Foundry / Azure AI 平台能力。",
   "sections": [
     {
       "emoji": "🧩",
       "title": "M365 Copilot",
       "points": [
-        "📌 M365 Copilot 新增 7 条，均来自 Roadmap，覆盖 Edge 自动打开 Copilot 侧边栏、Agent 365 控制平面、Teams 会议知识留存、Viva Glint 管理配置助手、统一 agent/app 安装管理、maker 间 agent sharing，以及 Teams 中启用现有应用对应 agents。",
-        "🤖 方向上从单点 Copilot 功能继续扩展到组织级 agent 管理、Teams/Edge 工作流入口和跨管理中心一致治理。",
-        "🔐 Agent 365、统一安装管理和会议知识留存值得纳入 IT 治理、权限边界和知识保留策略讨论。"
+        "📌 本次 M365 Copilot 新增 4 条，代表性更新：『Available today: OpenAI GPT-6 Astra in Microsoft Copilot』、『Copilot (Microsoft 365)： Create Videos in the Clipchamp Start Page（April CY2026）』、『Planner: Microsoft Planner tab support for shared and private channels in Microsoft Teams（August CY2026）』、『Viva： Create and customize PBI reports（September CY2026）』。",
+        "🤖 重点跟踪 Copilot Chat、agent、M365 应用内 Copilot、Viva/Teams 等工作流入口的能力扩展。",
+        "🔐 对治理、权限、数据保护和采用运营相关更新优先纳入客户沟通材料。"
       ]
     },
     {
       "emoji": "🛠️",
       "title": "Copilot Studio",
       "points": [
-        "📌 Copilot Studio / Power Platform 新增 2 条：Power Platform / Dataverse 并入 AI at Work always-on roadmap；Copilot Studio 7 月 What's new 汇总 Agent ID、MCP 工具、MCP 认证、实时 agent、环境级遥测与会话附件。",
-        "🧰 这些更新强化了 agent 从构建、认证、监控到多渠道部署的生产化路径。",
-        "🏗️ 对 CoE 和平台团队而言，重点是把 maker 协作、MCP 工具治理、Entra Agent ID 和遥测能力纳入标准架构。"
+        "📌 本次 Copilot Studio / Power Platform 新增 2 条，代表性更新：『Turbocharge your canvas development with the canvas authoring agent plugin – now generally available!』、『PPCC 2026: Bringing AI and your business processes together』。",
+        "🧰 重点关注 agent 工具扩展、MCP、工作流、身份治理、遥测和多渠道实时 agent。",
+        "🏗️ 这些更新可直接用于企业 agent 平台治理、CoE 标准化和 maker 生产化路径。"
       ]
     },
     {
       "emoji": "☁️",
       "title": "Azure AI（Microsoft Foundry）",
       "points": [
-        "📌 Azure AI 新增 2 条：Microsoft Foundry 的 agent 成本优化四个杠杆，以及 Azure OpenAI / Foundry 经典门户 What's new 中 GPT Realtime 2.0、Realtime Translate 与 Realtime Whisper 文档更新。",
-        "🧠 Foundry 方向继续围绕生产级 agent 的成本、实时语音、翻译与转写能力补强。",
-        "🚀 适合用于语音 agent、实时交互、RAG/agent 成本治理和 Azure AI Foundry 架构选型材料。"
+        "📌 本次 Azure AI 新增 3 条，代表性更新：『MAI-Image-2.6 and MAI-Image-2.6-Flash: Quality and speed at production scale』、『Choosing a real-time voice architecture on Microsoft Foundry: three enterprise patterns』、『It Wasn't the Private Endpoint: Why the Foundry Playground Breaks Behind Private Networking』。",
+        "🧠 重点关注 Foundry 模型、实时语音/转写、agent grounding、评估与生产级 AI 平台能力。",
+        "🚀 适合支撑 Azure AI Foundry 架构选型、RAG/agent 数据准备和企业级上线评审。"
       ]
     }
   ]
