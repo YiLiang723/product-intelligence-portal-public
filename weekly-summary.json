@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-09T11:03:56+08:00",
-  "intro": "本次增量新增 14 条产品更新：M365 Copilot 13 条、Copilot Studio / Power Platform 0 条、Azure AI 1 条。",
+  "generatedAt": "2026-09-10T11:04:43+08:00",
+  "intro": "本次增量新增 15 条产品更新：M365 Copilot 9 条、Copilot Studio / Power Platform 0 条、Azure AI 6 条。",
   "sections": [
     {
       "emoji": "🧩",
       "title": "M365 Copilot",
       "points": [
-        "📌 本次新增 13 条：『Planner: Add times to task start, finish, and due dates（November CY2026）』、『Teams： Meeting Shared Files（October CY2026）』、『Viva： Viva Glint - Survey taking experience refinements（September CY2026）』、『Purview： Data Loss Prevention for Microsoft Cowork（October CY2026）』、『Viva： Copilot Analytics - Agent value insights in Agent 365 Dashboard（October CY2026）』。",
+        "📌 本次新增 9 条：『Teams： Connect Teams meeting to existing Planner Plans（November CY2026）』、『Viva： Viva Glint - Topic Assignments Included in Comment Report Export（June CY2026）』、『Viva： Rolling out Custom branding in Engage（August CY2026）』、『Outlook: Inline chat for email drafting（October CY2026）』、『SharePoint: Changes to the FAQ web part authoring experience（October CY2026）』。",
         "🤖 重点关注 Copilot、agent、Teams/Edge/Viva 工作流入口与管理治理。",
         "🔐 建议结合 Agent 365、权限、数据治理和采用运营更新客户材料。"
       ]
@@ -24,7 +24,7 @@
       "emoji": "☁️",
       "title": "Azure AI（Microsoft Foundry）",
       "points": [
-        "📌 本次新增 1 条：『[Launched] Generally Available: Azure Developer CLI (azd) Extension Framework』。",
+        "📌 本次新增 6 条：『The Economics of Agent Optimization: Context engineering for enterprise AI agents』、『Enterprise AI transformation relies on the end-to-end platform: Azure was built for this moment』、『OpenAI GPT-6 Astra 登陆 Microsoft Copilot』、『Microsoft Foundry 实时语音架构三种企业模式』、『Can a Harmless Prompt Break an AI Guardrail?』。",
         "🧠 重点关注 Foundry 模型、实时语音、私网部署、评估与生产级 agent 架构。",
         "🚀 可用于 Azure AI Foundry 选型、RAG/agent 成本治理和上线评审。"
       ]
