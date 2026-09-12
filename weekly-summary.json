@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-11T11:10:48+08:00",
-  "intro": "本次增量新增 9 条产品更新：M365 Copilot 5 条、Copilot Studio / Power Platform 1 条、Azure AI 3 条。",
+  "generatedAt": "2026-09-12T13:20:36+08:00",
+  "intro": "本次增量新增 8 条产品更新：M365 Copilot 7 条、Copilot Studio / Power Platform 0 条、Azure AI 1 条。",
   "sections": [
     {
       "emoji": "🧩",
       "title": "M365 Copilot",
       "points": [
-        "📌 本次新增 5 条：『Purview compliance portal： Data Lifecycle Management - Retention based on Last Accessed for files in OneDrive and SharePoint（January CY2027）』、『Copilot (Microsoft 365)： Realtime voice interactions in Word and PowerPoint（October CY2026）』、『Viva： Copilot Enhanced Topic Assignment（August CY2026）』、『Copilot (Microsoft 365)： New Rich Answer Cards（September CY2026）』、『Copilot (Microsoft M365)： Copilot Chat can now better match search results from text that appears inside images embedded in Word, Excel, and PowerPoint file（October CY2026）』。",
+        "📌 本次新增 7 条：『Purview： Endpoint Data Loss Prevention - Expand protection to Copilot + PC devices for Recall snapshots through custom policies（May CY2026）』、『Outlook: Co-Authoring Highlight and Rewrite（July CY2026）』、『OneNote: Suggested Artifact Creation in Copilot Notebooks（August CY2026）』、『Copilot (Microsoft 365)： Insights: Copilot Analytics - Cowork adoption and impact（July CY2026）』、『Word: Copilot edit mode is available to users in Office 365 GCC（October CY2026）』。",
         "🤖 重点关注 Copilot、agent、Teams/Edge/Viva 工作流入口与管理治理。",
         "🔐 建议结合 Agent 365、权限、数据治理和采用运营更新客户材料。"
       ]
@@ -15,7 +15,7 @@
       "emoji": "🛠️",
       "title": "Copilot Studio",
       "points": [
-        "📌 本次新增 1 条：『Enhanced Data Model Migration Utility Now Generally Available, with Dynamics 365 Portal Templates Support』。",
+        "📌 本次新增 0 条：无。",
         "🧰 重点关注 maker 体验、agent 工具化、MCP、工作流和 Power Platform 与业务流程结合。",
         "🏗️ 适合纳入 CoE、平台治理、低代码生产化与 agent 生命周期材料。"
       ]
@@ -24,7 +24,7 @@
       "emoji": "☁️",
       "title": "Azure AI（Microsoft Foundry）",
       "points": [
-        "📌 本次新增 3 条：『Beyond the benchmark: How an adaptive approach drives scientific discovery』、『Create multimodal applications with OpenAI models in Microsoft Foundry』、『Voice to Chat Best Practice for Call Centre Use Cases』。",
+        "📌 本次新增 1 条：『The Economics of Agent Optimization: How AI agent governance controls cost and proves ROI』。",
         "🧠 重点关注 Foundry 模型、实时语音、私网部署、评估与生产级 agent 架构。",
         "🚀 可用于 Azure AI Foundry 选型、RAG/agent 成本治理和上线评审。"
       ]
