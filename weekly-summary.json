@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-12T13:20:36+08:00",
-  "intro": "本次增量新增 8 条产品更新：M365 Copilot 7 条、Copilot Studio / Power Platform 0 条、Azure AI 1 条。",
+  "generatedAt": "2026-09-15T11:03:20+08:00",
+  "intro": "本次增量新增 3 条产品更新：M365 Copilot 3 条、Copilot Studio / Power Platform 0 条、Azure AI 0 条。",
   "sections": [
     {
       "emoji": "🧩",
       "title": "M365 Copilot",
       "points": [
-        "📌 本次新增 7 条：『Purview： Endpoint Data Loss Prevention - Expand protection to Copilot + PC devices for Recall snapshots through custom policies（May CY2026）』、『Outlook: Co-Authoring Highlight and Rewrite（July CY2026）』、『OneNote: Suggested Artifact Creation in Copilot Notebooks（August CY2026）』、『Copilot (Microsoft 365)： Insights: Copilot Analytics - Cowork adoption and impact（July CY2026）』、『Word: Copilot edit mode is available to users in Office 365 GCC（October CY2026）』。",
+        "📌 本次新增 3 条：『Copilot (Microsoft 365)： [Copilot Extensibility] Users in GCC-M will able to use custom engine agents（August CY2026）』、『Outlook: Copilot Settings in classic Outlook for Windows（July CY2026）』、『365 app： New Copilot Notebooks design in the Microsoft 365 Copilot App (iOS)（September CY2026）』。",
         "🤖 重点关注 Copilot、agent、Teams/Edge/Viva 工作流入口与管理治理。",
         "🔐 建议结合 Agent 365、权限、数据治理和采用运营更新客户材料。"
       ]
@@ -24,7 +24,7 @@
       "emoji": "☁️",
       "title": "Azure AI（Microsoft Foundry）",
       "points": [
-        "📌 本次新增 1 条：『The Economics of Agent Optimization: How AI agent governance controls cost and proves ROI』。",
+        "📌 本次新增 0 条：无。",
         "🧠 重点关注 Foundry 模型、实时语音、私网部署、评估与生产级 agent 架构。",
         "🚀 可用于 Azure AI Foundry 选型、RAG/agent 成本治理和上线评审。"
       ]
