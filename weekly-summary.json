@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-16T11:05:26+08:00",
-  "intro": "本次增量新增 17 条产品更新：M365 Copilot 14 条、Copilot Studio / Power Platform 1 条、Azure AI 2 条。",
+  "generatedAt": "2026-09-20T10:42:05+08:00",
+  "intro": "本次增量新增 15 条产品更新：M365 Copilot 10 条、Copilot Studio / Power Platform 0 条、Azure AI 5 条。",
   "sections": [
     {
       "emoji": "🧩",
       "title": "M365 Copilot",
       "points": [
-        "📌 本次新增 14 条：『Purview： DSPM-Copilot Readiness and Data Explorer（January CY2027）』、『Copilot Studio： Cost visibility in Preview Chat and History（September CY2026）』、『Copilot Studio： Cost visibility in Agent Evaluations（September CY2026）』、『Copilot Studio： Cost visibility in Monitor tab（September CY2026）』、『Teams： Ask Copilot from Search on Mobile（October CY2026）』。",
+        "📌 本次新增 10 条：『Teams： Express face enrollment（November CY2026）』、『Purview： Data Lifecycle Management-Legacy Teams retention policies covering Copilot will be treated as Teams-only（October CY2026）』、『Edge： Autolaunch opt-in experience for managed devices（November CY2026）』、『Planner: Expiration of plans from meetings due to inactivity（October CY2026）』、『Copilot (Microsoft 365)： Copilot Cowork for Government Clouds（November CY2026）』。",
         "🤖 重点关注 Copilot、agent、Teams/Edge/Viva 工作流入口与管理治理。",
         "🔐 建议结合 Agent 365、权限、数据治理和采用运营更新客户材料。"
       ]
@@ -15,7 +15,7 @@
       "emoji": "🛠️",
       "title": "Copilot Studio",
       "points": [
-        "📌 本次新增 1 条：『Managing apps built in Copilot Studio』。",
+        "📌 本次新增 0 条：无。",
         "🧰 重点关注 maker 体验、agent 工具化、MCP、工作流和 Power Platform 与业务流程结合。",
         "🏗️ 适合纳入 CoE、平台治理、低代码生产化与 agent 生命周期材料。"
       ]
@@ -24,7 +24,7 @@
       "emoji": "☁️",
       "title": "Azure AI（Microsoft Foundry）",
       "points": [
-        "📌 本次新增 2 条：『Data Meets Agents』、『Can a Harmless Prompt Break an AI Guardrail?』。",
+        "📌 本次新增 5 条：『A2A Endpoints and A2A Tool in Microsoft Foundry agents』、『[In preview] Public Preview: Foundry Routines in Foundry Agent Service』、『[Launched] Generally Available: Publishing Microsoft Foundry agents to Microsoft 365 Copilot and Teams』、『[In preview] Public Preview: Network egress controls for hosted agents in Microsoft Foundry』、『[Launched] Generally Available: Enable and disable controls for Microsoft Foundry agents in Agent 365』。",
         "🧠 重点关注 Foundry 模型、实时语音、私网部署、评估与生产级 agent 架构。",
         "🚀 可用于 Azure AI Foundry 选型、RAG/agent 成本治理和上线评审。"
       ]
